@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>À Propos | V.E.D DAJI</title>
-    <!-- Assurez-vous d'avoir une image nommée V.E.D.png -->
     <link rel="icon" type="image/png" href="images/V.E.D.png">
-
-    <!-- POLICES & ICONES -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* MÊMES VARIABLES QUE L'INDEX POUR LA COHÉRENCE */
         :root {
             --primary: #008751;       
             --primary-glow: rgba(0, 135, 81, 0.6);
@@ -24,7 +20,6 @@
             --text-muted: #a1a1aa;
             --radius: 20px;
         }
-
         [data-theme="light"] {
             --bg-body: #f0f2f5;
             --bg-glass: rgba(255, 255, 255, 0.8);
@@ -32,20 +27,16 @@
             --text-main: #111827;
             --text-muted: #4b5563;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Satoshi', sans-serif; }
         body { background: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; transition: 0.5s; }
 
-        /* HEADER */
         header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo { font-weight: 900; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-main); text-decoration: none; }
         .logo img { height: 45px; }
         .logo span { color: var(--primary); }
-
         .icon-btn { width: 45px; height: 45px; border-radius: 50%; background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; text-decoration: none; }
         .icon-btn:hover { background: var(--primary); color: white; }
 
-        /* CONTENU SPECIFIQUE A PROPOS */
         .glass-container {
             width: 100%; max-width: 900px; margin: 20px auto 60px;
             background: var(--bg-glass); backdrop-filter: blur(25px);
@@ -56,7 +47,6 @@
 
         h1 { font-size: 2.5rem; margin-bottom: 20px; text-align: center; }
         h1 span { color: var(--primary); }
-        
         .section-title { font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: var(--gold); }
         .text-content { line-height: 1.8; color: var(--text-muted); font-size: 1.05rem; text-align: justify; }
 
@@ -67,14 +57,11 @@
 
         .cta-box { margin-top: 50px; text-align: center; padding: 30px; background: linear-gradient(45deg, rgba(0,135,81,0.2), transparent); border-radius: 20px; border: 1px solid var(--primary); }
         .btn-join { padding: 12px 30px; background: var(--primary); color: white; text-decoration: none; border-radius: 30px; font-weight: 700; display: inline-block; margin-top: 15px; transition: 0.3s; }
-        .btn-join:hover { transform: scale(1.05); box-shadow: 0 10px 20px var(--primary-glow); }
-
+        
         @media(max-width: 768px) {
             .glass-container { padding: 25px; margin: 10px; width: auto; }
             .stats-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
         }
-
         .background-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background: radial-gradient(circle at 80% 10%, var(--primary-glow), transparent 40%),
@@ -84,65 +71,33 @@
     </style>
 </head>
 <body>
-
     <div class="background-glow"></div>
-
     <header>
         <a href="index.html" class="logo">
             <img src="images/V.E.D.png" alt="" onerror="this.style.display='none'">
             V.E.D <span>DAJI</span>
         </a>
         <div style="display:flex; gap:15px;">
-            <!-- RETOUR A L'ACCUEIL -->
-            <a href="index.html" class="icon-btn" title="Accueil"><i class="fa-solid fa-house"></i></a>
-            
             <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
+            <a href="index.html" class="icon-btn"><i class="fa-solid fa-house"></i></a>
         </div>
     </header>
 
     <div class="glass-container">
         <h1>À propos de <span>V.E.D DAJI</span></h1>
-        
-        <p class="text-content" style="text-align: center;">
-            Volontaires pour l'Éducation et le Développement.
-        </p>
+        <p class="text-content" style="text-align: center;">Volontaires pour l'Éducation et le Développement.</p>
 
         <h2 class="section-title"><i class="fa-solid fa-bullseye"></i> Notre Mission</h2>
         <p class="text-content">
             Le V.E.D DAJI est une organisation dédiée à l'excellence académique et au développement social. 
-            Nous œuvrons pour connecter les étudiants, partager les connaissances et créer un réseau solide 
-            entre les universités et le monde professionnel. Notre objectif est de former les leaders de demain 
-            à travers l'entraide et la solidarité.
+            Nous œuvrons pour connecter les étudiants, partager les connaissances et créer un réseau solide.
         </p>
 
-        <h2 class="section-title"><i class="fa-solid fa-eye"></i> Notre Vision</h2>
-        <p class="text-content">
-            Nous aspirons à un monde où chaque étudiant a accès aux ressources nécessaires pour réussir. 
-            Que ce soit à travers des ateliers, des conférences ou du mentorat, le V.E.D s'engage à briser 
-            les barrières de l'éducation.
-        </p>
-
-        <!-- STATISTIQUES -->
         <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Membres Actifs</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">10+</div>
-                <div class="stat-label">Pays Représentés</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support & Entraide</div>
-            </div>
+            <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Membres Actifs</div></div>
+            <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Pays Représentés</div></div>
+            <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Support & Entraide</div></div>
         </div>
-
-        <h2 class="section-title"><i class="fa-solid fa-users"></i> Rejoignez la communauté</h2>
-        <p class="text-content">
-            Que vous soyez étudiant en Licence, Master ou Doctorat, ou simplement passionné par le développement, 
-            votre place est parmi nous. Ensemble, construisons l'avenir.
-        </p>
 
         <div class="cta-box">
             <h3 style="color:white; margin-bottom:10px;">Prêt à nous rejoindre ?</h3>
@@ -151,17 +106,10 @@
         </div>
     </div>
 
-    <!-- PIED DE PAGE -->
-    <footer style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.9rem;">
-        &copy; 2025 V.E.D DAJI. Tous droits réservés.
-    </footer>
-
     <script>
-        // GESTION DU THEME
         const themeBtn = document.getElementById('theme-toggle');
         const icon = themeBtn.querySelector('i');
         const html = document.documentElement;
-        
         const savedTheme = localStorage.getItem('theme') || 'dark';
         html.setAttribute('data-theme', savedTheme);
         icon.className = savedTheme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';

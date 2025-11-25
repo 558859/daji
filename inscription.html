@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription | V.E.D DAJI</title>
     <link rel="icon" type="image/png" href="images/V.E.D.png">
-
-    <!-- POLICES & ICONES -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- VARIABLES --- */
         :root {
             --primary: #008751;       
             --primary-glow: rgba(0, 135, 81, 0.6);
@@ -23,7 +20,6 @@
             --text-muted: #a1a1aa;
             --radius: 20px;
         }
-
         [data-theme="light"] {
             --bg-body: #f0f2f5;
             --bg-glass: rgba(255, 255, 255, 0.8);
@@ -31,20 +27,16 @@
             --text-main: #111827;
             --text-muted: #4b5563;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Satoshi', sans-serif; }
         body { background: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; transition: 0.5s; }
 
-        /* HEADER */
         header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo { font-weight: 900; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-main); text-decoration: none; }
         .logo img { height: 45px; }
         .logo span { color: var(--primary); }
-
         .icon-btn { width: 45px; height: 45px; border-radius: 50%; background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; text-decoration: none; }
         .icon-btn:hover { background: var(--primary); color: white; }
 
-        /* CONTAINER */
         .glass-container {
             width: 100%; max-width: 800px; margin: 20px auto 60px;
             background: var(--bg-glass); backdrop-filter: blur(25px);
@@ -53,18 +45,15 @@
         }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* TABS */
         .tabs-wrapper { display: flex; justify-content: center; margin-bottom: 30px; }
         .tabs { background: rgba(0,0,0,0.2); padding: 5px; border-radius: 50px; display: inline-flex; position: relative; border: 1px solid var(--border); }
         .tab-btn { padding: 12px 30px; border-radius: 40px; border: none; background: transparent; color: var(--text-muted); font-weight: 700; cursor: pointer; z-index: 2; transition: 0.3s; }
         .tab-btn.active { color: white; }
         .tab-bg { position: absolute; top: 5px; left: 5px; height: calc(100% - 10px); background: var(--primary); border-radius: 40px; z-index: 1; transition: 0.3s; width: 0; }
 
-        /* FORMULAIRE */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .input-group { margin-bottom: 20px; position: relative; }
         .full-width { grid-column: span 2; }
-
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-left: 10px; }
         
         .custom-input {
@@ -76,14 +65,9 @@
         .custom-input:focus { border-color: var(--primary); background: rgba(0, 135, 81, 0.05); }
         .input-icon { position: absolute; left: 15px; top: 44px; color: var(--text-muted); transition: 0.3s; pointer-events: none; }
         .custom-input:focus + .input-icon { color: var(--primary); }
-
-        /* SELECT AVEC DRAPEAUX */
         select.custom-input { appearance: none; cursor: pointer; }
         .select-wrapper { position: relative; }
-        .select-wrapper::after {
-            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            position: absolute; right: 20px; top: 44px; color: var(--text-muted); pointer-events: none;
-        }
+        .select-wrapper::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; right: 20px; top: 44px; color: var(--text-muted); pointer-events: none; }
         option { color: #000; padding: 5px; }
 
         .btn-submit {
@@ -94,50 +78,31 @@
         }
         .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 40px var(--primary-glow); }
 
-        /* STATES */
         .content-box { display: none; }
         .content-box.active { display: block; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-        
         .loading-spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: white; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
         .success-message { text-align: center; display: none; padding: 40px; }
         .success-icon { font-size: 4rem; color: var(--primary); margin-bottom: 20px; animation: bounce 1s infinite; }
         @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
 
-        @media(max-width: 600px) { 
-            .form-grid { grid-template-columns: 1fr; } 
-            .full-width { grid-column: span 1; } 
-            .glass-container { padding: 25px; border: none; background: transparent; }
-        }
-
-        .background-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 10% 20%, var(--primary-glow), transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.15), transparent 40%);
-            animation: pulseGlow 10s infinite alternate; filter: blur(60px); opacity: 0.6;
-        }
+        @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .glass-container { padding: 25px; border: none; background: transparent; } }
+        .background-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 10% 20%, var(--primary-glow), transparent 40%), radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.15), transparent 40%); animation: pulseGlow 10s infinite alternate; filter: blur(60px); opacity: 0.6; }
     </style>
 </head>
 <body>
-
     <div class="background-glow"></div>
-
     <header>
-        <a href="index.html" class="logo">
-            <img src="images/V.E.D.png" alt="" onerror="this.style.display='none'">
-            V.E.D <span>DAJI</span>
-        </a>
+        <a href="index.html" class="logo"><img src="images/V.E.D.png" alt=""> V.E.D <span>DAJI</span></a>
         <div style="display:flex; gap:15px;">
-            <a href="apropos.html" class="icon-btn" title="À propos"><i class="fa-solid fa-circle-info"></i></a>
+            <a href="apropos.html" class="icon-btn"><i class="fa-solid fa-circle-info"></i></a>
             <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
-            <a href="index.html" class="icon-btn" title="Accueil"><i class="fa-solid fa-arrow-left"></i></a>
+            <a href="index.html" class="icon-btn"><i class="fa-solid fa-arrow-left"></i></a>
         </div>
     </header>
 
     <div class="glass-container">
-        <!-- TABS -->
         <div class="tabs-wrapper">
             <div class="tabs">
                 <div class="tab-bg" id="tab-pill"></div>
@@ -146,15 +111,12 @@
             </div>
         </div>
 
-        <!-- 1. FORMULAIRE -->
         <div id="member-content" class="content-box active">
-            
             <div id="form-ui">
                 <div style="text-align:center; margin-bottom:30px;">
                     <h2 style="font-size:1.8rem; margin-bottom:10px;">Rejoindre le V.E.D DAJI</h2>
                     <p style="color:var(--text-muted);">Remplissez le formulaire soigneusement.</p>
                 </div>
-
                 <form id="inscriptionForm" name="submit-to-google-sheet">
                     <div class="form-grid">
                         <div class="input-group">
@@ -164,261 +126,24 @@
                         </div>
                         <div class="input-group">
                             <label>Prénom</label>
-                            <input type="text" name="Prénom" class="custom-input" placeholder="Votre prénom" required>
+                            <input type="text" name="Prenom" class="custom-input" placeholder="Votre prénom" required>
                             <i class="fa-regular fa-user input-icon"></i>
                         </div>
-
                         <div class="input-group select-wrapper full-width">
                             <label>Pays ou Territoire</label>
                             <select name="Pays" class="custom-input" required>
                                 <option value="" disabled selected>Sélectionnez votre pays...</option>
-                                <optgroup label="Fréquents">
-                                    <option value="Guinée">🇬🇳 Guinée</option>
-                                    <option value="Sénégal">🇸🇳 Sénégal</option>
-                                    <option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option>
-                                    <option value="France">🇫🇷 France</option>
-                                    <option value="États-Unis">🇺🇸 États-Unis</option>
-                                    <option value="Canada">🇨🇦 Canada</option>
-                                </optgroup>
-                                <optgroup label="Liste Complète">
-                                    <option value="Afghanistan">🇦🇫 Afghanistan</option>
-                                    <option value="Afrique du Sud">🇿🇦 Afrique du Sud</option>
-                                    <option value="Albanie">🇦🇱 Albanie</option>
-                                    <option value="Algérie">🇩🇿 Algérie</option>
-                                    <option value="Allemagne">🇩🇪 Allemagne</option>
-                                    <option value="Andorre">🇦🇩 Andorre</option>
-                                    <option value="Angola">🇦🇴 Angola</option>
-                                    <option value="Anguilla">🇦🇮 Anguilla</option>
-                                    <option value="Antigua-et-Barbuda">🇦🇬 Antigua-et-Barbuda</option>
-                                    <option value="Arabie saoudite">🇸🇦 Arabie saoudite</option>
-                                    <option value="Argentine">🇦🇷 Argentine</option>
-                                    <option value="Arménie">🇦🇲 Arménie</option>
-                                    <option value="Aruba">🇦🇼 Aruba</option>
-                                    <option value="Australie">🇦🇺 Australie</option>
-                                    <option value="Autriche">🇦🇹 Autriche</option>
-                                    <option value="Azerbaïdjan">🇦🇿 Azerbaïdjan</option>
-                                    <option value="Bahamas">🇧🇸 Bahamas</option>
-                                    <option value="Bahreïn">🇧🇭 Bahreïn</option>
-                                    <option value="Bangladesh">🇧🇩 Bangladesh</option>
-                                    <option value="Barbade">🇧🇧 Barbade</option>
-                                    <option value="Belgique">🇧🇪 Belgique</option>
-                                    <option value="Belize">🇧🇿 Belize</option>
-                                    <option value="Bénin">🇧🇯 Bénin</option>
-                                    <option value="Bermudes">🇧🇲 Bermudes</option>
-                                    <option value="Bhoutan">🇧🇹 Bhoutan</option>
-                                    <option value="Biélorussie">🇧🇾 Biélorussie</option>
-                                    <option value="Birmanie">🇲🇲 Birmanie</option>
-                                    <option value="Bolivie">🇧🇴 Bolivie</option>
-                                    <option value="Bosnie-Herzégovine">🇧🇦 Bosnie-Herzégovine</option>
-                                    <option value="Botswana">🇧🇼 Botswana</option>
-                                    <option value="Brésil">🇧🇷 Brésil</option>
-                                    <option value="Brunei">🇧🇳 Brunei</option>
-                                    <option value="Bulgarie">🇧🇬 Bulgarie</option>
-                                    <option value="Burkina Faso">🇧🇫 Burkina Faso</option>
-                                    <option value="Burundi">🇧🇮 Burundi</option>
-                                    <option value="Cambodge">🇰🇭 Cambodge</option>
-                                    <option value="Cameroun">🇨🇲 Cameroun</option>
-                                    <option value="Canada">🇨🇦 Canada</option>
-                                    <option value="Cap-Vert">🇨🇻 Cap-Vert</option>
-                                    <option value="Centrafrique">🇨🇫 Centrafrique</option>
-                                    <option value="Chili">🇨🇱 Chili</option>
-                                    <option value="Chine">🇨🇳 Chine</option>
-                                    <option value="Chypre">🇨🇾 Chypre</option>
-                                    <option value="Colombie">🇨🇴 Colombie</option>
-                                    <option value="Comores">🇰🇲 Comores</option>
-                                    <option value="Congo-Brazzaville">🇨🇬 Congo-Brazzaville</option>
-                                    <option value="Congo-Kinshasa">🇨🇩 Congo-Kinshasa</option>
-                                    <option value="Corée du Nord">🇰🇵 Corée du Nord</option>
-                                    <option value="Corée du Sud">🇰🇷 Corée du Sud</option>
-                                    <option value="Costa Rica">🇨🇷 Costa Rica</option>
-                                    <option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option>
-                                    <option value="Croatie">🇭🇷 Croatie</option>
-                                    <option value="Cuba">🇨🇺 Cuba</option>
-                                    <option value="Curaçao">🇨🇼 Curaçao</option>
-                                    <option value="Danemark">🇩🇰 Danemark</option>
-                                    <option value="Djibouti">🇩🇯 Djibouti</option>
-                                    <option value="Dominique">🇩🇲 Dominique</option>
-                                    <option value="Égypte">🇪🇬 Égypte</option>
-                                    <option value="Émirats arabes unis">🇦🇪 Émirats arabes unis</option>
-                                    <option value="Équateur">🇪🇨 Équateur</option>
-                                    <option value="Érythrée">🇪🇷 Érythrée</option>
-                                    <option value="Espagne">🇪🇸 Espagne</option>
-                                    <option value="Estonie">🇪🇪 Estonie</option>
-                                    <option value="États-Unis">🇺🇸 États-Unis</option>
-                                    <option value="Éthiopie">🇪🇹 Éthiopie</option>
-                                    <option value="Fidji">🇫🇯 Fidji</option>
-                                    <option value="Finlande">🇫🇮 Finlande</option>
-                                    <option value="France">🇫🇷 France</option>
-                                    <option value="Gabon">🇬🇦 Gabon</option>
-                                    <option value="Gambie">🇬🇲 Gambie</option>
-                                    <option value="Géorgie">🇬🇪 Géorgie</option>
-                                    <option value="Ghana">🇬🇭 Ghana</option>
-                                    <option value="Gibraltar">🇬🇮 Gibraltar</option>
-                                    <option value="Grèce">🇬🇷 Grèce</option>
-                                    <option value="Grenade">🇬🇩 Grenade</option>
-                                    <option value="Groenland">🇬🇱 Groenland</option>
-                                    <option value="Guadeloupe">🇬🇵 Guadeloupe</option>
-                                    <option value="Guam">🇬🇺 Guam</option>
-                                    <option value="Guatemala">🇬🇹 Guatemala</option>
-                                    <option value="Guinée">🇬🇳 Guinée</option>
-                                    <option value="Guinée-Bissau">🇬🇼 Guinée-Bissau</option>
-                                    <option value="Guinée équatoriale">🇬🇶 Guinée équatoriale</option>
-                                    <option value="Guyana">🇬🇾 Guyana</option>
-                                    <option value="Guyane française">🇬🇫 Guyane française</option>
-                                    <option value="Haïti">🇭🇹 Haïti</option>
-                                    <option value="Honduras">🇭🇳 Honduras</option>
-                                    <option value="Hong Kong">🇭🇰 Hong Kong</option>
-                                    <option value="Hongrie">🇭🇺 Hongrie</option>
-                                    <option value="Îles Caïmans">🇰🇾 Îles Caïmans</option>
-                                    <option value="Îles Cook">🇨🇰 Îles Cook</option>
-                                    <option value="Îles Féroé">🇫🇴 Îles Féroé</option>
-                                    <option value="Îles Salomon">🇸🇧 Îles Salomon</option>
-                                    <option value="Îles Turques-et-Caïques">🇹🇨 Îles Turques-et-Caïques</option>
-                                    <option value="Îles Vierges britanniques">🇻🇬 Îles Vierges britanniques</option>
-                                    <option value="Îles Vierges des États-Unis">🇻🇮 Îles Vierges des États-Unis</option>
-                                    <option value="Inde">🇮🇳 Inde</option>
-                                    <option value="Indonésie">🇮🇩 Indonésie</option>
-                                    <option value="Irak">🇮🇶 Irak</option>
-                                    <option value="Iran">🇮🇷 Iran</option>
-                                    <option value="Irlande">🇮🇪 Irlande</option>
-                                    <option value="Islande">🇮🇸 Islande</option>
-                                    <option value="Israël">🇮🇱 Israël</option>
-                                    <option value="Italie">🇮🇹 Italie</option>
-                                    <option value="Jamaïque">🇯🇲 Jamaïque</option>
-                                    <option value="Japon">🇯🇵 Japon</option>
-                                    <option value="Jordanie">🇯🇴 Jordanie</option>
-                                    <option value="Kazakhstan">🇰🇿 Kazakhstan</option>
-                                    <option value="Kenya">🇰🇪 Kenya</option>
-                                    <option value="Kirghizistan">🇰🇬 Kirghizistan</option>
-                                    <option value="Kiribati">🇰🇮 Kiribati</option>
-                                    <option value="Koweït">🇰🇼 Koweït</option>
-                                    <option value="La Réunion">🇷🇪 La Réunion</option>
-                                    <option value="Laos">🇱🇦 Laos</option>
-                                    <option value="Lesotho">🇱🇸 Lesotho</option>
-                                    <option value="Lettonie">🇱🇻 Lettonie</option>
-                                    <option value="Liban">🇱🇧 Liban</option>
-                                    <option value="Libéria">🇱🇷 Libéria</option>
-                                    <option value="Libye">🇱🇾 Libye</option>
-                                    <option value="Liechtenstein">🇱🇮 Liechtenstein</option>
-                                    <option value="Lituanie">🇱🇹 Lituanie</option>
-                                    <option value="Luxembourg">🇱🇺 Luxembourg</option>
-                                    <option value="Macao">🇲🇴 Macao</option>
-                                    <option value="Macédoine du Nord">🇲🇰 Macédoine du Nord</option>
-                                    <option value="Madagascar">🇲🇬 Madagascar</option>
-                                    <option value="Malaisie">🇲🇾 Malaisie</option>
-                                    <option value="Malawi">🇲🇼 Malawi</option>
-                                    <option value="Maldives">🇲🇻 Maldives</option>
-                                    <option value="Mali">🇲🇱 Mali</option>
-                                    <option value="Malte">🇲🇹 Malte</option>
-                                    <option value="Maroc">🇲🇦 Maroc</option>
-                                    <option value="Martinique">🇲🇶 Martinique</option>
-                                    <option value="Maurice">🇲🇺 Maurice</option>
-                                    <option value="Mauritanie">🇲🇷 Mauritanie</option>
-                                    <option value="Mayotte">🇾🇹 Mayotte</option>
-                                    <option value="Mexique">🇲🇽 Mexique</option>
-                                    <option value="Micronésie">🇫🇲 Micronésie</option>
-                                    <option value="Moldavie">🇲🇩 Moldavie</option>
-                                    <option value="Monaco">🇲🇨 Monaco</option>
-                                    <option value="Mongolie">🇲🇳 Mongolie</option>
-                                    <option value="Monténégro">🇲🇪 Monténégro</option>
-                                    <option value="Montserrat">🇲🇸 Montserrat</option>
-                                    <option value="Mozambique">🇲🇿 Mozambique</option>
-                                    <option value="Namibie">🇳🇦 Namibie</option>
-                                    <option value="Nauru">🇳🇷 Nauru</option>
-                                    <option value="Népal">🇳🇵 Népal</option>
-                                    <option value="Nicaragua">🇳🇮 Nicaragua</option>
-                                    <option value="Niger">🇳🇪 Niger</option>
-                                    <option value="Nigéria">🇳🇬 Nigéria</option>
-                                    <option value="Niue">🇳🇺 Niue</option>
-                                    <option value="Norvège">🇳🇴 Norvège</option>
-                                    <option value="Nouvelle-Calédonie">🇳🇨 Nouvelle-Calédonie</option>
-                                    <option value="Nouvelle-Zélande">🇳🇿 Nouvelle-Zélande</option>
-                                    <option value="Oman">🇴🇲 Oman</option>
-                                    <option value="Ouganda">🇺🇬 Ouganda</option>
-                                    <option value="Ouzbékistan">🇺🇿 Ouzbékistan</option>
-                                    <option value="Pakistan">🇵🇰 Pakistan</option>
-                                    <option value="Palaos">🇵🇼 Palaos</option>
-                                    <option value="Palestine">🇵🇸 Palestine</option>
-                                    <option value="Panama">🇵🇦 Panama</option>
-                                    <option value="Papouasie-Nouvelle-Guinée">🇵🇬 Papouasie-Nouvelle-Guinée</option>
-                                    <option value="Paraguay">🇵🇾 Paraguay</option>
-                                    <option value="Pays-Bas">🇳🇱 Pays-Bas</option>
-                                    <option value="Pérou">🇵🇪 Pérou</option>
-                                    <option value="Philippines">🇵🇭 Philippines</option>
-                                    <option value="Pologne">🇵🇱 Pologne</option>
-                                    <option value="Polynésie française">🇵🇫 Polynésie française</option>
-                                    <option value="Porto Rico">🇵🇷 Porto Rico</option>
-                                    <option value="Portugal">🇵🇹 Portugal</option>
-                                    <option value="Qatar">🇶🇦 Qatar</option>
-                                    <option value="République dominicaine">🇩🇴 République dominicaine</option>
-                                    <option value="République tchèque">🇨🇿 République tchèque</option>
-                                    <option value="Roumanie">🇷🇴 Roumanie</option>
-                                    <option value="Royaume-Uni">🇬🇧 Royaume-Uni</option>
-                                    <option value="Russie">🇷🇺 Russie</option>
-                                    <option value="Rwanda">🇷🇼 Rwanda</option>
-                                    <option value="Saint-Barthélemy">🇧🇱 Saint-Barthélemy</option>
-                                    <option value="Saint-Christophe-et-Niévès">🇰🇳 Saint-Christophe-et-Niévès</option>
-                                    <option value="Saint-Marin">🇸🇲 Saint-Marin</option>
-                                    <option value="Saint-Martin">🇲🇫 Saint-Martin</option>
-                                    <option value="Saint-Pierre-et-Miquelon">🇵🇲 Saint-Pierre-et-Miquelon</option>
-                                    <option value="Saint-Vincent-et-les-Grenadines">🇻🇨 Saint-Vincent-et-les-Grenadines</option>
-                                    <option value="Sainte-Lucie">🇱🇨 Sainte-Lucie</option>
-                                    <option value="Salvador">🇸🇻 Salvador</option>
-                                    <option value="Samoa">🇼🇸 Samoa</option>
-                                    <option value="Samoa américaines">🇦🇸 Samoa américaines</option>
-                                    <option value="Sao Tomé-et-Principe">🇸🇹 Sao Tomé-et-Principe</option>
-                                    <option value="Sénégal">🇸🇳 Sénégal</option>
-                                    <option value="Serbie">🇷🇸 Serbie</option>
-                                    <option value="Seychelles">🇸🇨 Seychelles</option>
-                                    <option value="Sierra Leone">🇸🇱 Sierra Leone</option>
-                                    <option value="Singapour">🇸🇬 Singapour</option>
-                                    <option value="Slovaquie">🇸🇰 Slovaquie</option>
-                                    <option value="Slovénie">🇸🇮 Slovénie</option>
-                                    <option value="Somalie">🇸🇴 Somalie</option>
-                                    <option value="Soudan">🇸🇩 Soudan</option>
-                                    <option value="Soudan du Sud">🇸🇸 Soudan du Sud</option>
-                                    <option value="Sri Lanka">🇱🇰 Sri Lanka</option>
-                                    <option value="Suède">🇸🇪 Suède</option>
-                                    <option value="Suisse">🇨🇭 Suisse</option>
-                                    <option value="Suriname">🇸🇷 Suriname</option>
-                                    <option value="Syrie">🇸🇾 Syrie</option>
-                                    <option value="Tadjikistan">🇹🇯 Tadjikistan</option>
-                                    <option value="Taïwan">🇹🇼 Taïwan</option>
-                                    <option value="Tanzanie">🇹🇿 Tanzanie</option>
-                                    <option value="Tchad">🇹🇩 Tchad</option>
-                                    <option value="Thaïlande">🇹🇭 Thaïlande</option>
-                                    <option value="Timor oriental">🇹🇱 Timor oriental</option>
-                                    <option value="Togo">🇹🇬 Togo</option>
-                                    <option value="Tonga">🇹🇴 Tonga</option>
-                                    <option value="Trinité-et-Tobago">🇹🇹 Trinité-et-Tobago</option>
-                                    <option value="Tunisie">🇹🇳 Tunisie</option>
-                                    <option value="Turkménistan">🇹🇲 Turkménistan</option>
-                                    <option value="Turquie">🇹🇷 Turquie</option>
-                                    <option value="Tuvalu">🇹🇻 Tuvalu</option>
-                                    <option value="Ukraine">🇺🇦 Ukraine</option>
-                                    <option value="Uruguay">🇺🇾 Uruguay</option>
-                                    <option value="Vanuatu">🇻🇺 Vanuatu</option>
-                                    <option value="Vatican">🇻🇦 Vatican</option>
-                                    <option value="Venezuela">🇻🇪 Venezuela</option>
-                                    <option value="Vietnam">🇻🇳 Vietnam</option>
-                                    <option value="Wallis-et-Futuna">🇼🇫 Wallis-et-Futuna</option>
-                                    <option value="Yémen">🇾🇪 Yémen</option>
-                                    <option value="Zambie">🇿🇲 Zambie</option>
-                                    <option value="Zimbabwe">🇿🇼 Zimbabwe</option>
-                                </optgroup>
+                                <optgroup label="Fréquents"><option value="Guinée">🇬🇳 Guinée</option><option value="Sénégal">🇸🇳 Sénégal</option><option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option><option value="France">🇫🇷 France</option><option value="États-Unis">🇺🇸 États-Unis</option><option value="Canada">🇨🇦 Canada</option></optgroup>
+                                <optgroup label="Autres"><option value="Mali">🇲🇱 Mali</option><option value="Maroc">🇲🇦 Maroc</option></optgroup>
                             </select>
                             <i class="fa-solid fa-globe input-icon"></i>
                         </div>
-
                         <div class="input-group">
                             <label>Téléphone (WhatsApp)</label>
-                            <input type="tel" name="Téléphone" id="phoneInput" class="custom-input" placeholder="+224 6xx xx xx xx" required>
+                            <input type="tel" name="Telephone" id="phoneInput" class="custom-input" placeholder="+224 6xx xx xx xx" required>
                             <i class="fa-solid fa-phone input-icon"></i>
-                            <p id="phoneError" style="color:#ef4444; font-size:0.8rem; margin-top:5px; display:none;">
-                                <i class="fa-solid fa-circle-exclamation"></i> L'indicatif pays est obligatoire (ex: +224...)
-                            </p>
+                            <p id="phoneError" style="color:#ef4444; font-size:0.8rem; margin-top:5px; display:none;"><i class="fa-solid fa-circle-exclamation"></i> L'indicatif pays est obligatoire</p>
                         </div>
-
                         <div class="input-group select-wrapper full-width">
                             <label>Niveau d'études</label>
                             <select name="Niveau" class="custom-input" required>
@@ -433,25 +158,17 @@
                             <i class="fa-solid fa-graduation-cap input-icon"></i>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn-submit">
-                        <span class="btn-text">Valider l'inscription</span>
-                        <div class="loading-spinner"></div>
-                    </button>
+                    <button type="submit" class="btn-submit"><span class="btn-text">Valider l'inscription</span><div class="loading-spinner"></div></button>
                 </form>
             </div>
-
-            <!-- SUCCESS -->
             <div id="success-ui" class="success-message">
                 <i class="fa-solid fa-circle-check success-icon"></i>
                 <h2>Félicitations !</h2>
                 <p style="color:var(--text-muted); margin-top:10px;">Votre demande d'adhésion a bien été reçue.<br>Le bureau vous contactera bientôt.</p>
                 <button onclick="location.reload()" class="btn-submit" style="margin-top:20px; background:var(--bg-glass); border:1px solid var(--border);">Nouveau formulaire</button>
             </div>
-
         </div>
 
-        <!-- 2. ADMIN -->
         <div id="admin-content" class="content-box">
             <div id="login-screen" style="text-align:center; padding:40px 0;">
                 <i class="fa-solid fa-shield-halved" style="font-size:3rem; color:var(--gold); margin-bottom:20px;"></i>
@@ -463,34 +180,26 @@
                 <button class="btn-submit" onclick="checkAdmin()" style="max-width:350px; margin:0 auto;">Connexion</button>
                 <p id="errorMsg" style="color:#ef4444; margin-top:15px; display:none;">Code incorrect</p>
             </div>
-
             <div id="dashboard" style="display:none;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                     <h3>Base de données</h3>
                     <button onclick="location.reload()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:600;">Déconnexion</button>
                 </div>
-                <!-- ICI LE TABLEAU S'AFFICHERA -->
                 <iframe id="sheetFrame" src="about:blank" style="width:100%; height:500px; border:none; border-radius:10px; background:white;"></iframe>
-                <p style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-muted);">Connexion sécurisée au serveur.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
         const PASSWORD_ADMIN = "VED2025"; 
-        
-        // J'ai inséré votre lien ici automatiquement
+        // VOS LIENS CONFIGURÉS (Google Script & Preview Mode pour 0 délai)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0oWTb44pWjXMhmjEYKqRmz4FAbBb668KfBcuOyXxxYrQtn_DMArFW0Bc_Dd5j6BzHwg/exec"; 
-        
-        // REMPLACEZ CE LIEN PAR CELUI DE VOTRE GOOGLE SHEET PUBLIÉ (Fichier > Partager > Publier sur le web > Intégrer)
         const LINK_SHEET = "https://docs.google.com/spreadsheets/d/16IGtpQPgmt3tVbMfkIt-4if2llRsE9EA0nd_ySvUxrQ/preview?rm=minimal";
 
-        // --- THEME ---
+        // THEME
         const themeBtn = document.getElementById('theme-toggle');
         const icon = themeBtn.querySelector('i');
         const html = document.documentElement;
-        
         const savedTheme = localStorage.getItem('theme') || 'dark';
         html.setAttribute('data-theme', savedTheme);
         icon.className = savedTheme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
@@ -503,41 +212,31 @@
             icon.className = newTheme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         });
 
-        // --- TABS ---
+        // TABS
         window.onload = function() {
             const activeBtn = document.querySelector('.tab-btn.active');
             if(activeBtn) movePill(activeBtn);
         };
-
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             movePill(btn);
-
             document.querySelectorAll('.content-box').forEach(box => box.classList.remove('active'));
-            
             setTimeout(() => {
-                if (tabId === 'member') {
-                    document.getElementById('member-content').classList.add('active');
-                } else {
-                    document.getElementById('admin-content').classList.add('active');
-                }
+                if (tabId === 'member') { document.getElementById('member-content').classList.add('active'); } 
+                else { document.getElementById('admin-content').classList.add('active'); }
             }, 100);
         }
-
         function movePill(btn) {
             const pill = document.getElementById('tab-pill');
             pill.style.width = btn.offsetWidth + "px";
             pill.style.left = btn.offsetLeft + "px";
         }
 
-        // --- ENVOI REEL VERS GOOGLE SHEETS ---
+        // SUBMIT
         const form = document.forms['submit-to-google-sheet'];
-
         form.addEventListener('submit', e => {
             e.preventDefault();
-
-            // 1. Validation Téléphone
             const phoneInput = document.getElementById('phoneInput');
             const phoneError = document.getElementById('phoneError');
             const phoneValue = phoneInput.value.trim();
@@ -545,17 +244,13 @@
             if (!phoneValue.startsWith('+') || phoneValue.length < 8) {
                 phoneError.style.display = 'block';
                 phoneInput.style.borderColor = '#ef4444';
-                phoneInput.animate([
-                    { transform: 'translateX(0)' }, { transform: 'translateX(-10px)' }, 
-                    { transform: 'translateX(10px)' }, { transform: 'translateX(0)' }
-                ], { duration: 300 });
+                phoneInput.animate([{transform:'translateX(0)'},{transform:'translateX(-10px)'},{transform:'translateX(10px)'},{transform:'translateX(0)'}],{duration:300});
                 return;
             } else {
                 phoneError.style.display = 'none';
                 phoneInput.style.borderColor = 'var(--border)';
             }
 
-            // 2. Animation UI
             const btn = document.querySelector('.btn-submit');
             const spinner = btn.querySelector('.loading-spinner');
             const text = btn.querySelector('.btn-text');
@@ -567,39 +262,25 @@
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
 
-            // 3. Envoi fetch()
             fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    console.log('Success!', response);
                     formUi.style.display = 'none';
                     successUi.style.display = 'block';
                     form.reset();
-                    // Reset bouton
-                    text.style.display = 'block';
-                    spinner.style.display = 'none';
-                    btn.style.opacity = '1';
-                    btn.style.pointerEvents = 'all';
+                    text.style.display = 'block'; spinner.style.display = 'none'; btn.style.opacity = '1'; btn.style.pointerEvents = 'all';
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
-                    // On affiche le succès même en cas d'erreur réseau mineure (CORS) 
-                    // car Google Scripts renvoie parfois des erreurs bizarres même si ça marche.
-                    // Pour être sûr, vérifiez votre sheet.
                     formUi.style.display = 'none';
-                    successUi.style.display = 'block';
-                    
-                    text.style.display = 'block';
-                    spinner.style.display = 'none';
-                    btn.style.opacity = '1';
-                    btn.style.pointerEvents = 'all';
+                    successUi.style.display = 'block'; // Afficher succès quand même si erreur réseau mineure
+                    text.style.display = 'block'; spinner.style.display = 'none'; btn.style.opacity = '1'; btn.style.pointerEvents = 'all';
                 });
         });
 
-        // --- ADMIN ---
+        // ADMIN
         function checkAdmin() {
             const input = document.getElementById('adminPass');
             const error = document.getElementById('errorMsg');
-            
             if (input.value === PASSWORD_ADMIN) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
@@ -610,10 +291,7 @@
                 setTimeout(() => { input.style.borderColor = 'var(--border)'; }, 2000);
             }
         }
-
-        function handleEnter(e) {
-            if(e.key === 'Enter') checkAdmin();
-        }
+        function handleEnter(e) { if(e.key === 'Enter') checkAdmin(); }
     </script>
 </body>
 </html>
