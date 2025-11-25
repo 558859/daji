@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site officiel de l'association V.E.D DAJI">
+    <title>V.E.D DAJI | Accueil</title>
+    <link rel="icon" type="image/png" href="images/V.E.D.png">
+
+    <!-- 1. IMPORTATION DES POLICES ET ICONES -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- 2. LE STYLE CSS -->
+    <style>
+        /* =========================================
+           VARIABLES & THÈMES
+        ========================================= */
+        :root {
+            --primary: #008751;       
+            --primary-glow: rgba(0, 135, 81, 0.5);
+            --gold: #fbbf24;          
+            --bg-body: #0a0a0a;
+            --bg-glass: rgba(20, 20, 20, 0.8);
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: rgba(255,255,255,0.1);
+            --shadow: 0 20px 50px rgba(0,0,0,0.5);
+            --radius: 20px;
+            --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f3f4f6;
+            --bg-glass: rgba(255, 255, 255, 0.90);
+            --bg-card: #ffffff;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --border-color: rgba(0,0,0,0.08);
+            --primary-glow: rgba(0, 135, 81, 0.2);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-body); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo { font-size: 3rem; font-weight: 900; color: var(--text-main); animation: pulse 1.5s infinite; }
+        .loader-logo span { color: var(--primary); }
+        @keyframes pulse { 50% { opacity: 0.5; transform: scale(0.95); } }
+
+        /* --- FOND ANIMÉ --- */
+        .background-glow {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 15% 50%, var(--primary-glow), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(251, 191, 36, 0.15), transparent 25%);
+            animation: pulseGlow 10s infinite alternate; pointer-events: none;
+        }
+        @keyframes pulseGlow { 100% { transform: scale(1.2); } }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 15px 5%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+            transition: 0.4s ease-in-out;
+        }
+        header.scrolled {
+            padding: 10px 5%; background: var(--bg-body);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-bottom: none;
+        }
+
+        .logo { font-weight: 900; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-main); text-decoration: none; }
+        .logo img { height: 45px; }
+        .logo span { color: var(--primary); }
+
+        .nav-group { display: flex; align-items: center; gap: 25px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: 0.3s; position: relative; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--primary); transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .theme-btn {
+            background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-main); width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: 0.3s;
+        }
+        .theme-btn:hover { background: var(--primary); border-color: var(--primary); color: white; }
+
+        .btn-join {
+            padding: 10px 25px; border-radius: 50px; background: var(--primary);
+            color: white; font-weight: 700; text-decoration: none;
+            box-shadow: 0 0 20px var(--primary-glow); transition: 0.3s;
+        }
+        .btn-join:hover { transform: translateY(-3px); box-shadow: 0 0 40px var(--primary-glow); }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            height: 90vh; position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px; overflow: hidden;
+        }
+        .hero-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.3; z-index: -1;
+        }
+        .video-overlay {
+            position: absolute; inset: 0; z-index: -1;
+            background: linear-gradient(to bottom, transparent 50%, var(--bg-body) 100%);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 9vw, 6rem); 
+            line-height: 1.1; margin-bottom: 20px;
+            background: linear-gradient(to right, var(--text-main), var(--text-muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            animation: fadeUp 1s ease-out;
+            width: 100%; max-width: 1000px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 40px;
+            animation: fadeUp 1s ease-out 0.3s backwards;
+        }
+
+        /* --- MEET CARD --- */
+        .meeting-section { max-width: 1000px; margin: -50px auto 100px; padding: 0 20px; position: relative; z-index: 10; }
+        .meet-card {
+            background: var(--bg-glass); border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px); border-radius: 24px; padding: 40px;
+            display: flex; align-items: center; justify-content: space-between; gap: 30px;
+            box-shadow: var(--shadow); transition: 0.4s;
+        }
+        .meet-card:hover { border-color: var(--primary); }
+        .live-indicator {
+            display: inline-flex; align-items: center; gap: 8px; 
+            color: #ef4444; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;
+        }
+        .dot { width: 10px; height: 10px; background: #ef4444; border-radius: 50%; animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.4; } }
+
+        .btn-meet {
+            background: var(--text-main); color: var(--bg-body); padding: 15px 30px; border-radius: 10px;
+            font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 10px;
+            transition: 0.3s; white-space: nowrap; 
+        }
+        .btn-meet:hover { background: var(--gold); color: black; transform: scale(1.05); }
+
+        /* --- BUREAU --- */
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--text-main); }
+        .section-title span { color: var(--primary); }
+        .bureau-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; max-width: 1200px; margin: 0 auto 120px; padding: 0 20px;
+        }
+        .member-card {
+            position: relative; height: 350px; border-radius: 20px; overflow: hidden; cursor: pointer;
+            box-shadow: var(--shadow); opacity: 0; transform: translateY(30px); transition: 0.8s ease-out;
+        }
+        .member-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .member-card:hover .member-img { transform: scale(1.1); }
+        .member-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, black, transparent);
+            padding: 20px; transform: translateY(50px); transition: 0.4s; opacity: 0.8;
+        }
+        .member-card:hover .member-overlay { transform: translateY(0); opacity: 1; }
+        .role { color: var(--gold); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+        .name { font-size: 1.4rem; font-weight: 700; margin: 5px 0; color: white; }
+
+        /* --- ACTUALITÉS --- */
+        .news-container {
+            max-width: 1200px; margin: 0 auto 100px; padding: 0 20px;
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px;
+        }
+        .video-feature {
+            position: relative; border-radius: 24px; overflow: hidden;
+            border: 1px solid var(--border-color); height: 400px; box-shadow: var(--shadow);
+        }
+        .video-feature video { width: 100%; height: 100%; object-fit: cover; }
+        .play-btn {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80px; height: 80px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 2rem; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.3);
+        }
+        .play-btn:hover { background: var(--primary); transform: translate(-50%, -50%) scale(1.1); }
+
+        .news-item {
+            background: var(--bg-card); padding: 20px; border-radius: 16px; margin-bottom: 20px;
+            display: flex; gap: 20px; align-items: center; transition: 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        .news-item:hover { border-color: var(--primary); transform: translateX(5px); }
+        .news-date { 
+            background: var(--border-color); padding: 10px; border-radius: 10px; 
+            text-align: center; min-width: 70px; color: var(--text-main);
+        }
+        .news-date span { display: block; font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+
+        /* --- FOOTER --- */
+        footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255,255,255,0.1); color: white; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .socials a { 
+            display: inline-flex; width: 40px; height: 40px; background: rgba(255,255,255,0.1); 
+            align-items: center; justify-content: center; border-radius: 50%; color: white; 
+            margin-right: 10px; transition: 0.3s; text-decoration: none;
+        }
+        .socials a:hover { background: var(--primary); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .nav-links, .btn-join { display: none; }
+            .news-container { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .meet-card { flex-direction: column; text-align: center; gap: 20px; padding: 30px; }
+            .meet-card > div { width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .live-indicator { margin: 0 auto 10px auto; }
+            .btn-meet { width: 100%; justify-content: center; margin-top: 10px; }
+            h1 { font-size: clamp(1.8rem, 10vw, 4rem); padding: 0 10px; }
+        }
+
+        /* --- MOBILE NAV --- */
+        .mobile-bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 75px;
+            background: var(--bg-glass); backdrop-filter: blur(20px); border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center; z-index: 2000;
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; color: var(--text-muted);
+            font-size: 0.7rem; font-weight: 600; gap: 5px; width: 60px; text-decoration: none;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-fab {
+            width: 50px; height: 50px; background: var(--primary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;
+            border: 4px solid var(--bg-body); transform: translateY(-25px); box-shadow: 0 5px 15px var(--primary-glow);
+        }
+        @media (min-width: 901px) { .mobile-bottom-nav { display: none; } }
+        
+        /* SCROLL TOP */
+        #scrollTop {
+            position: fixed; bottom: 90px; right: 20px; width: 45px; height: 45px;
+            background: var(--primary); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            opacity: 0; pointer-events: none; transition: 0.3s; z-index: 900;
+        }
+        #scrollTop.show { opacity: 1; pointer-events: all; }
+        @media(min-width: 900px) { #scrollTop { bottom: 30px; right: 30px; } }
+        
+        /* ANIMATIONS */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo">V.E.D <span>DAJI</span></div>
+        </div>
+    </div>
+
+    <!-- BOUTON SCROLL TOP -->
+    <div id="scrollTop" onclick="window.scrollTo(0,0)"><i class="fa-solid fa-arrow-up"></i></div>
+
+    <div class="background-glow"></div>
+
+    <header>
+        <a href="#" class="logo">
+            <!-- Assurez-vous d'avoir l'image V.E.D.png -->
+            <img src="images/V.E.D.png" alt="Logo">
+            V.E.D <span>DAJI</span>
+        </a>
+        <div class="nav-group">
+            <nav class="nav-links">
+                <a href="#bureau">Bureau</a>
+                <a href="#meet">Réunion</a>
+                <a href="#news">Actualités</a>
+                <a href="#video">Vidéos</a>
+            </nav>
+            <button id="theme-toggle" class="theme-btn" aria-label="Changer le thème">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <a href="inscription.html" class="btn-join">Espace Membre</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+        <!-- Remplacer PEAKFLOWN.mp4 par votre vidéo -->
+        <video class="hero-video-bg" autoplay muted loop playsinline>
+            <source src="videos/PEAKFLOWN.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        
+        <h1>L'INTELLIGENCE <br> COLLECTIVE.</h1>
+        <p class="hero-subtitle">La plateforme officielle de l'association VED DAJI. Une communauté d'élite pour un avenir brillant.</p>
+        
+        <div style="display:flex; gap:20px;">
+            <a href="#news" style="color:var(--text-main); font-weight:700; border-bottom:1px solid var(--text-main); text-decoration:none; padding-bottom:5px;">Voir les news</a>
+        </div>
+    </section>
+
+    <!-- MEETING -->
+    <section class="meeting-section" id="meet">
+        <div class="meet-card reveal">
+            <div>
+                <div class="live-indicator"><div class="dot"></div> En direct</div>
+                <h2 style="font-size: 2rem; margin-bottom: 10px; color: var(--text-main);">Réunion Hebdomadaire</h2>
+                <p style="color:var(--text-muted); max-width:400px; margin: 0 auto;">Rejoignez les membres du bureau pour discuter des projets.</p>
+            </div>
+            <div class="meet-info-right" style="text-align:right;">
+                <div style="font-size:0.9rem; margin-bottom:15px; color:var(--text-muted);">Prochaine séance : <strong>Dimanche 20h</strong></div>
+                <a href="https://meet.google.com/" target="_blank" class="btn-meet">
+                    <i class="fa-solid fa-video"></i> Rejoindre
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUREAU -->
+    <h2 class="section-title reveal">Le Bureau <span>Exécutif</span></h2>
+    <div class="bureau-grid" id="bureau">
+        <!-- Membre 1 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" class="member-img" alt="Président" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Président</div>
+                <div class="name">Ibrahim Attoumani</div>
+                <div style="margin-top:10px; color:#ccc; font-size:0.9rem;"><i class="fa-brands fa-linkedin"></i></div>
+            </div>
+        </div>
+        <!-- Membre 2 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" class="member-img" alt="SG" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Secrétaire G.</div>
+                <div class="name">Fatoumata Camara</div>
+            </div>
+        </div>
+        <!-- Membre 3 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400" class="member-img" alt="Trésorier" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Trésorier</div>
+                <div class="name">Mamadou Sow</div>
+            </div>
+        </div>
+        <!-- Membre 4 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400" class="member-img" alt="Com" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Communication</div>
+                <div class="name">Aissatou Bah</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTUALITÉS -->
+    <div class="news-container" id="news">
+        <div class="video-feature reveal" id="video">
+            <video poster="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1000" loading="lazy">
+                <source src="presentation.mp4" type="video/mp4">
+            </video>
+            <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+        </div>
+        <div class="news-list reveal">
+            <h3 style="margin-bottom:20px; font-size:1.5rem; color:var(--text-main);">Dernières Actualités</h3>
+            <div class="news-item">
+                <div class="news-date">20 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Lancement des adhésions</h4>
+                    <p class="news-desc">La campagne 2025 est ouverte à tous les étudiants.</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">15 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Conférence "Leadership"</h4>
+                    <p class="news-desc">Retour sur l'événement avec nos partenaires.</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">10 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Tournoi Sportif</h4>
+                    <p class="news-desc">Résultats des qualifications régionales.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div style="font-weight:900; font-size:1.5rem; margin-bottom:20px; color:white;">VED DAJI</div>
+                <p style="color:#888; line-height:1.6;">L'association de référence pour l'accompagnement et l'excellence étudiante.</p>
+            </div>
+            <div>
+                <h4 style="color:white; margin-bottom:20px;">Liens Utiles</h4>
+                <ul style="list-style:none; color:#888; line-height:2;">
+                    <li><a href="apropos.html" style="color:#888; text-decoration:none;">À Propos</a></li>
+                    <li><a href="#" style="color:#888; text-decoration:none;">Statuts</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:white; margin-bottom:20px;">Nous Suivre</h4>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:50px; color:#444; font-size:0.8rem;">
+            &copy; <span id="year"></span> V.E.D DAJI. Tous droits réservés.
+        </div>
+    </footer>
+
+    <!-- MENU MOBILE -->
+    <nav class="mobile-bottom-nav">
+        <a href="#home" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Accueil</span></a>
+        <a href="#meet" class="nav-item"><i class="fa-solid fa-video"></i> <span>Live</span></a>
+        <a href="inscription.html" class="nav-item"><div class="nav-fab"><i class="fa-solid fa-plus"></i></div></a>
+        <a href="#bureau" class="nav-item"><i class="fa-solid fa-users"></i> <span>Bureau</span></a>
+        <a href="#" class="nav-item" id="mobile-theme-toggle"><i class="fa-solid fa-moon"></i> <span>Thème</span></a>
+    </nav>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // 1. PRELOADER & DATE
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if(preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => { preloader.style.display = 'none'; }, 500);
+            }
+            const yearSpan = document.getElementById('year');
+            if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+        });
+
+        // 2. SCROLL & ACTIVE LINK
+        const scrollTopBtn = document.getElementById('scrollTop');
+        const header = document.querySelector('header');
+        const sections = document.querySelectorAll('section, div[id]');
+        const navLi = document.querySelectorAll('.mobile-bottom-nav .nav-item');
+
+        window.addEventListener('scroll', () => {
+            let currentScroll = window.scrollY;
+            
+            // Header & ScrollTop
+            if(scrollTopBtn) scrollTopBtn.classList.toggle('show', currentScroll > 500);
+            if(header) header.classList.toggle('scrolled', currentScroll > 50);
+
+            // Scroll Spy
+            let currentSection = '';
+            sections.forEach(section => {
+                if (window.scrollY >= (section.offsetTop - 200)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            navLi.forEach(li => {
+                li.classList.remove('active');
+                if (li.getAttribute('href') && li.getAttribute('href').includes(currentSection)) {
+                    li.classList.add('active');
+                }
+            });
+        });
+
+        // 3. THÈME (DARK/LIGHT)
+        const themeBtn = document.getElementById('theme-toggle');
+        const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+        const htmlElement = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        function setTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            const iconClass = theme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            if(themeBtn) themeBtn.querySelector('i').className = iconClass;
+            if(mobileThemeBtn) mobileThemeBtn.querySelector('i').className = iconClass;
+        }
+
+        const toggleTheme = () => setTheme(htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        if(themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        if(mobileThemeBtn) mobileThemeBtn.addEventListener('click', (e) => { e.preventDefault(); toggleTheme(); });
+
+        // 4. ANIMATIONS REVEAL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 5. VIDÉO PLAY/PAUSE
+        const playBtn = document.querySelector('.play-btn');
+        const video = document.querySelector('.video-feature video');
+
+        if(playBtn && video) {
+            const toggleVideo = () => {
+                if(video.paused) { 
+                    video.play(); playBtn.style.opacity = '0'; playBtn.style.pointerEvents = 'none';
+                } else { 
+                    video.pause(); playBtn.style.opacity = '1'; playBtn.style.pointerEvents = 'all';
+                }
+            };
+            playBtn.addEventListener('click', toggleVideo);
+            video.addEventListener('click', toggleVideo);
+            video.addEventListener('ended', () => {
+                playBtn.style.opacity = '1'; playBtn.style.pointerEvents = 'all'; video.load();
+            });
+        }
+    </script>
+</body>
+</html>
