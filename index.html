@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site officiel de l'association V.E.D DAJI">
+    <title>V.E.D DAJI | Accueil</title>
+    <link rel="icon" type="image/png" href="images/V.E.D.png">
+
+    <!-- POLICES ET ICONES -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- STYLE CSS EXTERNE -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo">V.E.D <span>DAJI</span></div>
+        </div>
+    </div>
+
+    <!-- BOUTON SCROLL TOP -->
+    <div id="scrollTop" onclick="window.scrollTo(0,0)"><i class="fa-solid fa-arrow-up"></i></div>
+
+    <div class="background-glow"></div>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="images/V.E.D.png" alt="Logo" onerror="this.style.display='none'">
+            V.E.D <span>DAJI</span>
+        </a>
+        <div class="nav-group">
+            <nav class="nav-links">
+                <a href="#bureau">Bureau</a>
+                <a href="#meet">Réunion</a>
+                <a href="#news">Actualités</a>
+                <a href="#video">Vidéos</a>
+            </nav>
+            <button id="theme-toggle" class="icon-btn" aria-label="Changer le thème">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <a href="inscription.html" class="btn-join">Espace Membre</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="home">
+        <video class="hero-video-bg" autoplay muted loop playsinline>
+            <source src="videos/PEAKFLOWN.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        
+        <h1>L'INTELLIGENCE <br> COLLECTIVE.</h1>
+        <p class="hero-subtitle">La plateforme officielle de l'association VED DAJI. Une communauté d'élite pour un avenir brillant.</p>
+        
+        <div style="display:flex; gap:20px;">
+            <a href="#news" style="color:var(--text-main); font-weight:700; border-bottom:1px solid var(--text-main); text-decoration:none; padding-bottom:5px;">Voir les news</a>
+        </div>
+    </section>
+
+    <!-- MEETING -->
+    <section class="meeting-section" id="meet">
+        <div class="meet-card reveal">
+            <div>
+                <div class="live-indicator"><div class="dot"></div> En direct</div>
+                <h2 style="font-size: 2rem; margin-bottom: 10px; color: var(--text-main);">Réunion Hebdomadaire</h2>
+                <p style="color:var(--text-muted); max-width:400px; margin: 0 auto;">Rejoignez les membres du bureau pour discuter des projets.</p>
+            </div>
+            <div class="meet-info-right" style="text-align:right;">
+                <div style="font-size:0.9rem; margin-bottom:15px; color:var(--text-muted);">Prochaine séance : <strong>Dimanche 20h</strong></div>
+                <a href="https://meet.google.com/" target="_blank" class="btn-meet">
+                    <i class="fa-solid fa-video"></i> Rejoindre
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUREAU -->
+    <h2 class="section-title reveal">Le Bureau <span>Exécutif</span></h2>
+    <div class="bureau-grid" id="bureau">
+        <!-- Membre 1 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" class="member-img" alt="Président" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Président</div>
+                <div class="name">Ibrahim Attoumani</div>
+                <div style="margin-top:10px; color:#ccc; font-size:0.9rem;"><i class="fa-brands fa-linkedin"></i></div>
+            </div>
+        </div>
+        <!-- Membre 2 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" class="member-img" alt="SG" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Secrétaire G.</div>
+                <div class="name">Fatoumata Camara</div>
+            </div>
+        </div>
+        <!-- Membre 3 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400" class="member-img" alt="Trésorier" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Trésorier</div>
+                <div class="name">Mamadou Sow</div>
+            </div>
+        </div>
+        <!-- Membre 4 -->
+        <div class="member-card reveal">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400" class="member-img" alt="Com" loading="lazy">
+            <div class="member-overlay">
+                <div class="role">Communication</div>
+                <div class="name">Aissatou Bah</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTUALITÉS -->
+    <div class="news-container" id="news">
+        <div class="video-feature reveal" id="video">
+            <video poster="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1000" loading="lazy">
+                <source src="presentation.mp4" type="video/mp4">
+            </video>
+            <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+        </div>
+        <div class="news-list reveal">
+            <h3 style="margin-bottom:20px; font-size:1.5rem; color:var(--text-main);">Dernières Actualités</h3>
+            <div class="news-item">
+                <div class="news-date">20 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Lancement des adhésions</h4>
+                    <p class="news-desc">La campagne 2025 est ouverte à tous les étudiants.</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">15 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Conférence "Leadership"</h4>
+                    <p class="news-desc">Retour sur l'événement avec nos partenaires.</p>
+                </div>
+            </div>
+            <div class="news-item">
+                <div class="news-date">10 <span>NOV</span></div>
+                <div>
+                    <h4 class="news-title">Tournoi Sportif</h4>
+                    <p class="news-desc">Résultats des qualifications régionales.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div style="font-weight:900; font-size:1.5rem; margin-bottom:20px; color:white;">VED DAJI</div>
+                <p style="color:#888; line-height:1.6;">L'association de référence pour l'accompagnement et l'excellence étudiante.</p>
+            </div>
+            <div>
+                <h4 style="color:white; margin-bottom:20px;">Liens Utiles</h4>
+                <ul style="list-style:none; color:#888; line-height:2;">
+                    <li><a href="apropos.html" style="color:#888; text-decoration:none;">À Propos</a></li>
+                    <li><a href="#" style="color:#888; text-decoration:none;">Statuts</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:white; margin-bottom:20px;">Nous Suivre</h4>
+                <div class="socials">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:50px; color:#444; font-size:0.8rem;">
+            &copy; <span id="year"></span> V.E.D DAJI. Tous droits réservés.
+        </div>
+    </footer>
+
+    <!-- MENU MOBILE -->
+    <nav class="mobile-bottom-nav">
+        <a href="#home" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Accueil</span></a>
+        <a href="#meet" class="nav-item"><i class="fa-solid fa-video"></i> <span>Live</span></a>
+        <a href="inscription.html" class="nav-item"><div class="nav-fab"><i class="fa-solid fa-plus"></i></div></a>
+        <a href="#bureau" class="nav-item"><i class="fa-solid fa-users"></i> <span>Bureau</span></a>
+        <a href="#" class="nav-item" id="mobile-theme-toggle"><i class="fa-solid fa-moon"></i> <span>Thème</span></a>
+    </nav>
+
+    <!-- SCRIPT JS EXTERNE -->
+    <script src="script.js" defer></script>
+</body>
+</html>

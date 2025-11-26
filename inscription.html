@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | V.E.D DAJI</title>
+    <link rel="icon" type="image/png" href="images/V.E.D.png">
+
+    <!-- POLICES & ICONES -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- STYLE CSS EXTERNE -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-glow"></div>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/V.E.D.png" alt="" onerror="this.style.display='none'">
+            V.E.D <span>DAJI</span>
+        </a>
+        <div style="display:flex; gap:15px;">
+            <a href="apropos.html" class="icon-btn" title="À propos"><i class="fa-solid fa-circle-info"></i></a>
+            <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
+            <a href="index.html" class="icon-btn" title="Accueil"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    </header>
+
+    <div class="glass-container">
+        <!-- TABS -->
+        <div class="tabs-wrapper">
+            <div class="tabs">
+                <div class="tab-bg" id="tab-pill"></div>
+                <button class="tab-btn active" onclick="switchTab('member', this)">Inscription</button>
+                <button class="tab-btn" onclick="switchTab('admin', this)">Administration</button>
+            </div>
+        </div>
+
+        <!-- 1. FORMULAIRE -->
+        <div id="member-content" class="content-box active">
+            
+            <div id="form-ui">
+                <div style="text-align:center; margin-bottom:30px;">
+                    <h2 style="font-size:1.8rem; margin-bottom:10px;">Rejoindre le V.E.D DAJI</h2>
+                    <p style="color:var(--text-muted);">Remplissez le formulaire soigneusement.</p>
+                </div>
+
+                <form id="inscriptionForm" name="submit-to-google-sheet">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Nom</label>
+                            <input type="text" name="Nom" class="custom-input" placeholder="Votre nom" required>
+                            <i class="fa-solid fa-user input-icon"></i>
+                        </div>
+                        <div class="input-group">
+                            <label>Prénom</label>
+                            <input type="text" name="Prénom" class="custom-input" placeholder="Votre prénom" required>
+                            <i class="fa-regular fa-user input-icon"></i>
+                        </div>
+
+                        <div class="input-group select-wrapper full-width">
+                            <label>Pays ou Territoire</label>
+                            <select name="Pays" class="custom-input" required>
+                                <option value="" disabled selected>Sélectionnez votre pays...</option>
+                                <optgroup label="Fréquents">
+                                    <option value="Guinée">🇬🇳 Guinée</option>
+                                    <option value="Sénégal">🇸🇳 Sénégal</option>
+                                    <option value="Côte d'Ivoire">🇨🇮 Côte d'Ivoire</option>
+                                    <option value="France">🇫🇷 France</option>
+                                    <option value="États-Unis">🇺🇸 États-Unis</option>
+                                    <option value="Canada">🇨🇦 Canada</option>
+                                </optgroup>
+                                <!-- ... (Tu peux remettre la liste complète des pays ici si tu veux, j'ai abrégé pour la clarté) ... -->
+                                <optgroup label="Liste Complète">
+                                    <option value="Afghanistan">🇦🇫 Afghanistan</option>
+                                    <option value="Guinée">🇬🇳 Guinée</option>
+                                    <!-- Ajoute le reste de ta liste immense ici -->
+                                </optgroup>
+                            </select>
+                            <i class="fa-solid fa-globe input-icon"></i>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Téléphone (WhatsApp)</label>
+                            <input type="tel" name="Téléphone" id="phoneInput" class="custom-input" placeholder="+224 6xx xx xx xx" required>
+                            <i class="fa-solid fa-phone input-icon"></i>
+                            <p id="phoneError" style="color:#ef4444; font-size:0.8rem; margin-top:5px; display:none;">
+                                <i class="fa-solid fa-circle-exclamation"></i> L'indicatif pays est obligatoire (ex: +224...)
+                            </p>
+                        </div>
+
+                        <div class="input-group select-wrapper full-width">
+                            <label>Niveau d'études</label>
+                            <select name="Niveau" class="custom-input" required>
+                                <option value="" disabled selected>Choisir une option...</option>
+                                <option value="Licence 1">Licence 1</option>
+                                <option value="Licence 2">Licence 2</option>
+                                <option value="Licence 3">Licence 3</option>
+                                <option value="Master 1">Master 1</option>
+                                <option value="Master 2">Master 2</option>
+                                <option value="Doctorat">Doctorat</option>
+                            </select>
+                            <i class="fa-solid fa-graduation-cap input-icon"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span class="btn-text">Valider l'inscription</span>
+                        <div class="loading-spinner"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- SUCCESS -->
+            <div id="success-ui" class="success-message">
+                <i class="fa-solid fa-circle-check success-icon"></i>
+                <h2>Félicitations !</h2>
+                <p style="color:var(--text-muted); margin-top:10px;">Votre demande d'adhésion a bien été reçue.<br>Le bureau vous contactera bientôt.</p>
+                <button onclick="location.reload()" class="btn-submit" style="margin-top:20px; background:var(--bg-glass); border:1px solid var(--border);">Nouveau formulaire</button>
+            </div>
+
+        </div>
+
+        <!-- 2. ADMIN -->
+        <div id="admin-content" class="content-box">
+            <div id="login-screen" style="text-align:center; padding:40px 0;">
+                <i class="fa-solid fa-shield-halved" style="font-size:3rem; color:var(--gold); margin-bottom:20px;"></i>
+                <h2 style="margin-bottom:10px;">Espace Bureau</h2>
+                <div style="position:relative; width:100%; max-width:350px; margin:20px auto;">
+                    <input type="password" id="adminPass" class="custom-input" placeholder="Code d'accès..." onkeypress="handleEnter(event)">
+                    <i class="fa-solid fa-key input-icon" style="top:50%; transform:translateY(-50%); left:15px;"></i>
+                </div>
+                <button class="btn-submit" onclick="checkAdmin()" style="max-width:350px; margin:0 auto;">Connexion</button>
+                <p id="errorMsg" style="color:#ef4444; margin-top:15px; display:none;">Code incorrect</p>
+            </div>
+
+            <div id="dashboard" style="display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <h3>Base de données</h3>
+                    <button onclick="location.reload()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:600;">Déconnexion</button>
+                </div>
+                <!-- ICI LE TABLEAU S'AFFICHERA -->
+                <iframe id="sheetFrame" src="about:blank" style="width:100%; height:500px; border:none; border-radius:10px; background:white;"></iframe>
+                <p style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-muted);">Connexion sécurisée au serveur.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT JS EXTERNE -->
+    <script src="script.js" defer></script>
+</body>
+</html>
