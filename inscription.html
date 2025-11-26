@@ -2,15 +2,13 @@
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Inscription | V.E.D DAJI</title>
     <link rel="icon" type="image/png" href="images/V.E.D.png">
 
-    <!-- POLICES & ICONES -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- STYLE CSS EXTERNE -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,7 +28,6 @@
     </header>
 
     <div class="glass-container">
-        <!-- TABS -->
         <div class="tabs-wrapper">
             <div class="tabs">
                 <div class="tab-bg" id="tab-pill"></div>
@@ -39,7 +36,6 @@
             </div>
         </div>
 
-        <!-- 1. FORMULAIRE -->
         <div id="member-content" class="content-box active">
             
             <div id="form-ui">
@@ -73,11 +69,23 @@
                                     <option value="États-Unis">🇺🇸 États-Unis</option>
                                     <option value="Canada">🇨🇦 Canada</option>
                                 </optgroup>
-                                <!-- ... (Tu peux remettre la liste complète des pays ici si tu veux, j'ai abrégé pour la clarté) ... -->
-                                <optgroup label="Liste Complète">
+                                <optgroup label="Autres">
                                     <option value="Afghanistan">🇦🇫 Afghanistan</option>
-                                    <option value="Guinée">🇬🇳 Guinée</option>
-                                    <!-- Ajoute le reste de ta liste immense ici -->
+                                    <option value="Algérie">🇩🇿 Algérie</option>
+                                    <option value="Allemagne">🇩🇪 Allemagne</option>
+                                    <option value="Belgique">🇧🇪 Belgique</option>
+                                    <option value="Cameroun">🇨🇲 Cameroun</option>
+                                    <option value="Chine">🇨🇳 Chine</option>
+                                    <option value="Espagne">🇪🇸 Espagne</option>
+                                    <option value="Gabon">🇬🇦 Gabon</option>
+                                    <option value="Italie">🇮🇹 Italie</option>
+                                    <option value="Japon">🇯🇵 Japon</option>
+                                    <option value="Mali">🇲🇱 Mali</option>
+                                    <option value="Maroc">🇲🇦 Maroc</option>
+                                    <option value="Royaume-Uni">🇬🇧 Royaume-Uni</option>
+                                    <option value="Russie">🇷🇺 Russie</option>
+                                    <option value="Tunisie">🇹🇳 Tunisie</option>
+                                    <option value="Turquie">🇹🇷 Turquie</option>
                                 </optgroup>
                             </select>
                             <i class="fa-solid fa-globe input-icon"></i>
@@ -114,7 +122,6 @@
                 </form>
             </div>
 
-            <!-- SUCCESS -->
             <div id="success-ui" class="success-message">
                 <i class="fa-solid fa-circle-check success-icon"></i>
                 <h2>Félicitations !</h2>
@@ -124,7 +131,6 @@
 
         </div>
 
-        <!-- 2. ADMIN -->
         <div id="admin-content" class="content-box">
             <div id="login-screen" style="text-align:center; padding:40px 0;">
                 <i class="fa-solid fa-shield-halved" style="font-size:3rem; color:var(--gold); margin-bottom:20px;"></i>
@@ -142,14 +148,12 @@
                     <h3>Base de données</h3>
                     <button onclick="location.reload()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:600;">Déconnexion</button>
                 </div>
-                <!-- ICI LE TABLEAU S'AFFICHERA -->
                 <iframe id="sheetFrame" src="about:blank" style="width:100%; height:500px; border:none; border-radius:10px; background:white;"></iframe>
                 <p style="text-align:center; margin-top:10px; font-size:0.8rem; color:var(--text-muted);">Connexion sécurisée au serveur.</p>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT JS EXTERNE -->
     <script src="script.js" defer></script>
 </body>
 </html>

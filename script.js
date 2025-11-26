@@ -32,7 +32,6 @@ if(mobileThemeBtn) mobileThemeBtn.addEventListener('click', (e) => { e.preventDe
 /* =========================================
    PAGE: ACCUEIL (INDEX) LOGIC
 ========================================= */
-// 1. Preloader & Year
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if(preloader) {
@@ -47,7 +46,6 @@ window.addEventListener('load', () => {
     if(activeBtn) movePill(activeBtn);
 });
 
-// 2. Scroll Logic (Header & BackToTop)
 const scrollTopBtn = document.getElementById('scrollTop');
 const header = document.querySelector('header');
 
@@ -55,13 +53,9 @@ if (header) {
     window.addEventListener('scroll', () => {
         let currentScroll = window.scrollY;
         
-        // Scroll Top Button
         if(scrollTopBtn) scrollTopBtn.classList.toggle('show', currentScroll > 500);
-        
-        // Header Blur Effect
         header.classList.toggle('scrolled', currentScroll > 50);
 
-        // Mobile Nav Active State (Scroll Spy)
         const sections = document.querySelectorAll('section, div[id]');
         const navLi = document.querySelectorAll('.mobile-bottom-nav .nav-item');
         
@@ -80,13 +74,11 @@ if (header) {
     });
 }
 
-// 3. Animations Reveal
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// 4. Video Player
 const playBtn = document.querySelector('.play-btn');
 const video = document.querySelector('.video-feature video');
 
@@ -108,7 +100,6 @@ if(playBtn && video) {
 /* =========================================
    PAGE: INSCRIPTION LOGIC
 ========================================= */
-// 1. Gestion des Onglets (Tabs)
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -135,14 +126,12 @@ function movePill(btn) {
     }
 }
 
-// 2. Gestion du Formulaire (Envoi Google Sheets)
 const form = document.forms['submit-to-google-sheet'];
 
 if(form) {
     form.addEventListener('submit', e => {
         e.preventDefault();
 
-        // Validation Téléphone
         const phoneInput = document.getElementById('phoneInput');
         const phoneError = document.getElementById('phoneError');
         const phoneValue = phoneInput.value.trim();
@@ -150,7 +139,6 @@ if(form) {
         if (!phoneValue.startsWith('+') || phoneValue.length < 8) {
             phoneError.style.display = 'block';
             phoneInput.style.borderColor = '#ef4444';
-            // Petite animation shake
             phoneInput.animate([
                 { transform: 'translateX(0)' }, { transform: 'translateX(-10px)' }, 
                 { transform: 'translateX(10px)' }, { transform: 'translateX(0)' }
@@ -161,7 +149,6 @@ if(form) {
             phoneInput.style.borderColor = 'var(--border)';
         }
 
-        // Animation UI (Chargement)
         const btn = document.querySelector('.btn-submit');
         const spinner = btn.querySelector('.loading-spinner');
         const text = btn.querySelector('.btn-text');
@@ -173,13 +160,11 @@ if(form) {
         btn.style.opacity = '0.7';
         btn.style.pointerEvents = 'none';
 
-        // Envoi
         fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form)})
             .then(response => {
                 formUi.style.display = 'none';
                 successUi.style.display = 'block';
                 form.reset();
-                // Reset UI
                 text.style.display = 'block';
                 spinner.style.display = 'none';
                 btn.style.opacity = '1';
@@ -187,7 +172,6 @@ if(form) {
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                // On affiche succès quand même (parfois erreur CORS Google Script fausse)
                 formUi.style.display = 'none';
                 successUi.style.display = 'block';
                 text.style.display = 'block';
@@ -198,7 +182,6 @@ if(form) {
     });
 }
 
-// 3. Admin Login
 function checkAdmin() {
     const input = document.getElementById('adminPass');
     const error = document.getElementById('errorMsg');

@@ -1,5 +1,5 @@
 /* =========================================
-   1. VARIABLES & RESET (Commun à tout le site)
+   1. VARIABLES & RESET (STABLE & INBOUGEABLE)
 ========================================= */
 :root {
     --primary: #008751;       
@@ -7,7 +7,7 @@
     --gold: #fbbf24;
     --bg-body: #050505;
     --bg-glass: rgba(255, 255, 255, 0.03);
-    --bg-card: rgba(20, 20, 20, 0.8); /* Utilisé sur l'accueil */
+    --bg-card: rgba(20, 20, 20, 0.8);
     --border: rgba(255, 255, 255, 0.1);
     --text-main: #ffffff;
     --text-muted: #a1a1aa;
@@ -29,14 +29,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Satoshi', sans-serif; }
 html { scroll-behavior: smooth; }
 
-body { 
+/* --- BLOCAGE DU SCROLL HORIZONTAL & ZOOM --- */
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden; /* Important : Coupe tout ce qui dépasse */
     background: var(--bg-body); 
     color: var(--text-main); 
     min-height: 100vh; 
     display: flex; 
     flex-direction: column; 
-    overflow-x: hidden; 
-    transition: 0.5s; 
+    transition: 0.5s;
+    touch-action: pan-y; /* Important : Autorise seulement le scroll vertical */
+    -webkit-text-size-adjust: 100%;
 }
 
 /* =========================================
@@ -57,12 +62,9 @@ header.scrolled {
     box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-bottom: none;
 }
 
-/* Page À propos & Inscription Header style simple */
+/* Header simple pour les autres pages */
 body:not(:has(.hero-section)) header {
-    position: relative; 
-    background: transparent;
-    border: none;
-    padding: 20px 5%;
+    position: relative; background: transparent; border: none; padding: 20px 5%;
 }
 
 .logo { font-weight: 900; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-main); text-decoration: none; }
@@ -77,7 +79,6 @@ body:not(:has(.hero-section)) header {
 }
 .icon-btn:hover { background: var(--primary); color: white; }
 
-/* Navigation Accueil Specifique */
 .nav-group { display: flex; align-items: center; gap: 25px; }
 .nav-links { display: flex; gap: 30px; }
 .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: 0.3s; position: relative; }
@@ -96,20 +97,16 @@ body:not(:has(.hero-section)) header {
 .btn-join:hover { transform: translateY(-3px); box-shadow: 0 0 40px var(--primary-glow); }
 
 /* =========================================
-   3. BACKGROUND ANIMATION
+   3. BACKGROUND & PRELOADER
 ========================================= */
 .background-glow {
-    position: fixed; inset: 0; z-index: -1;
+    position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh;
     background: radial-gradient(circle at 15% 50%, var(--primary-glow), transparent 25%),
                 radial-gradient(circle at 85% 30%, rgba(251, 191, 36, 0.15), transparent 25%);
     animation: pulseGlow 10s infinite alternate; pointer-events: none; filter: blur(60px); opacity: 0.6;
 }
 @keyframes pulseGlow { 100% { transform: scale(1.2); } }
 
-/* =========================================
-   4. PAGE: ACCUEIL (Index)
-========================================= */
-/* Preloader */
 #preloader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--bg-body); z-index: 9999;
@@ -119,11 +116,13 @@ body:not(:has(.hero-section)) header {
 .loader-logo { font-size: 3rem; font-weight: 900; color: var(--text-main); animation: pulse 1.5s infinite; }
 @keyframes pulse { 50% { opacity: 0.5; transform: scale(0.95); } }
 
-/* Hero */
+/* =========================================
+   4. ACCUEIL ELEMENTS
+========================================= */
 .hero-section {
     height: 90vh; position: relative;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center; padding: 0 20px; overflow: hidden;
+    text-align: center; padding: 0 20px; overflow: hidden; width: 100%;
 }
 .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: -1; }
 .video-overlay { position: absolute; inset: 0; z-index: -1; background: linear-gradient(to bottom, transparent 50%, var(--bg-body) 100%); }
@@ -132,13 +131,11 @@ h1 {
     font-size: clamp(2rem, 9vw, 6rem); line-height: 1.1; margin-bottom: 20px;
     background: linear-gradient(to right, var(--text-main), var(--text-muted));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    display: inline-block; width: 100%; max-width: 1000px;
-    animation: fadeUp 1s ease-out;
+    display: inline-block; width: 100%; max-width: 1000px; animation: fadeUp 1s ease-out;
 }
 .hero-subtitle { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; animation: fadeUp 1s ease-out 0.3s backwards; }
 
-/* Meeting Card */
-.meeting-section { max-width: 1000px; margin: -50px auto 100px; padding: 0 20px; position: relative; z-index: 10; }
+.meeting-section { max-width: 1000px; margin: -50px auto 100px; padding: 0 20px; position: relative; z-index: 10; width: 100%; }
 .meet-card {
     background: var(--bg-glass); border: 1px solid var(--border);
     backdrop-filter: blur(20px); border-radius: 24px; padding: 40px;
@@ -155,13 +152,12 @@ h1 {
 }
 .btn-meet:hover { background: var(--gold); color: black; transform: scale(1.05); }
 
-/* Bureau & General Sections */
 .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--text-main); }
 .section-title span { color: var(--primary); }
 
 .bureau-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px; max-width: 1200px; margin: 0 auto 120px; padding: 0 20px;
+    gap: 30px; max-width: 1200px; margin: 0 auto 120px; padding: 0 20px; width: 100%;
 }
 .member-card {
     position: relative; height: 350px; border-radius: 20px; overflow: hidden; cursor: pointer;
@@ -178,10 +174,9 @@ h1 {
 .role { color: var(--gold); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
 .name { font-size: 1.4rem; font-weight: 700; margin: 5px 0; color: white; }
 
-/* News */
 .news-container {
     max-width: 1200px; margin: 0 auto 100px; padding: 0 20px;
-    display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px;
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; width: 100%;
 }
 .video-feature {
     position: relative; border-radius: 24px; overflow: hidden;
@@ -207,7 +202,9 @@ h1 {
 }
 .news-date span { display: block; font-weight: 700; font-size: 1.2rem; color: var(--primary); }
 
-/* Footer */
+/* =========================================
+   5. FOOTER & MOBILE
+========================================= */
 footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255,255,255,0.1); color: white; margin-top: auto; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
 .socials a { 
@@ -217,7 +214,6 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
 }
 .socials a:hover { background: var(--primary); }
 
-/* Mobile Nav */
 .mobile-bottom-nav {
     position: fixed; bottom: 0; left: 0; width: 100%; height: 75px;
     background: var(--bg-glass); backdrop-filter: blur(20px); border-top: 1px solid var(--border);
@@ -235,7 +231,6 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
 }
 @media (min-width: 901px) { .mobile-bottom-nav { display: none; } }
 
-/* Scroll Top */
 #scrollTop {
     position: fixed; bottom: 90px; right: 20px; width: 45px; height: 45px;
     background: var(--primary); color: white; border-radius: 50%;
@@ -245,13 +240,11 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
 #scrollTop.show { opacity: 1; pointer-events: all; }
 @media(min-width: 900px) { #scrollTop { bottom: 30px; right: 30px; } }
 
-/* Animations */
 .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 @keyframes fadeUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
 @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* Responsive General */
 @media (max-width: 900px) {
     .nav-links, .btn-join { display: none; }
     .news-container { grid-template-columns: 1fr; }
@@ -262,7 +255,7 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
 }
 
 /* =========================================
-   5. PAGE: À PROPOS (Spécifique)
+   6. PAGES SPECIFIQUES (APROPOS & INSCRIPTION)
 ========================================= */
 .glass-container {
     width: 100%; max-width: 900px; margin: 20px auto 60px;
@@ -285,9 +278,7 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
     .stats-grid { grid-template-columns: 1fr; }
 }
 
-/* =========================================
-   6. PAGE: INSCRIPTION (Formulaire)
-========================================= */
+/* FORMS */
 .tabs-wrapper { display: flex; justify-content: center; margin-bottom: 30px; }
 .tabs { background: rgba(0,0,0,0.2); padding: 5px; border-radius: 50px; display: inline-flex; position: relative; border: 1px solid var(--border); }
 .tab-btn { padding: 12px 30px; border-radius: 40px; border: none; background: transparent; color: var(--text-muted); font-weight: 700; cursor: pointer; z-index: 2; transition: 0.3s; }
@@ -297,7 +288,6 @@ footer { background: #000; padding: 80px 5% 30px; border-top: 1px solid rgba(255
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .input-group { margin-bottom: 20px; position: relative; }
 .full-width { grid-column: span 2; }
-
 label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-muted); margin-left: 10px; }
 
 .custom-input {
