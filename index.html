@@ -2,7 +2,7 @@
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <!-- Cette ligne empêche le zoom et le décalage horizontal -->
+    <!-- BLOCAGE DU ZOOM ET DU SCROLL HORIZONTAL -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Site officiel de l'association V.E.D DAJI">
     <title>V.E.D DAJI | Excellence & Leadership</title>
@@ -15,18 +15,20 @@
 </head>
 <body>
 
+    <!-- PRELOADER -->
     <div id="preloader">
         <div class="loader-content">
             <div class="loader-logo">V.E.D <span>DAJI</span></div>
         </div>
     </div>
 
+    <!-- BOUTONS FLOTTANTS -->
     <div id="scrollTop" onclick="window.scrollTo(0,0)"><i class="fa-solid fa-arrow-up"></i></div>
     <div class="background-glow"></div>
 
+    <!-- HEADER -->
     <header>
         <a href="#" class="logo">
-            <!-- Assure-toi que l'image existe ou supprime la balise img si pas besoin -->
             <img src="images/V.E.D.png" alt="Logo" onerror="this.style.display='none'">
             V.E.D <span>DAJI</span>
         </a>
@@ -35,7 +37,7 @@
                 <a href="#bureau">Bureau</a>
                 <a href="#meet">Réunion</a>
                 <a href="#news">Actualités</a>
-                <a href="#video">Vidéos</a>
+                <a href="#faq">FAQ</a>
             </nav>
             <button id="theme-toggle" class="icon-btn" aria-label="Changer le thème">
                 <i class="fa-solid fa-moon"></i>
@@ -44,13 +46,14 @@
         </div>
     </header>
 
+    <!-- HERO SECTION (MACHINE A ECRIRE) -->
     <section class="hero-section" id="home">
         <video class="hero-video-bg" autoplay muted loop playsinline>
             <source src="videos/PEAKFLOWN.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
         
-        <h1>L'INTELLIGENCE <br> COLLECTIVE.</h1>
+        <h1>L'INTELLIGENCE <br> <span class="typewriter-text"></span><span class="cursor">|</span></h1>
         <p class="hero-subtitle">La plateforme officielle de l'association VED DAJI. Une communauté d'élite pour un avenir brillant.</p>
         
         <div style="display:flex; gap:20px; z-index: 2;">
@@ -60,6 +63,7 @@
         <div class="scroll-indicator"><div class="mouse"></div></div>
     </section>
 
+    <!-- REUNION SECTION (COMPTE A REBOURS) -->
     <section class="meeting-section container" id="meet">
         <div class="meet-card reveal">
             <div>
@@ -68,7 +72,16 @@
                 <p style="color:var(--text-muted); max-width:400px; margin: 10px 0;">Rejoignez les membres du bureau et les étudiants pour discuter des projets.</p>
             </div>
             <div class="meet-info-right">
-                <div style="font-size:0.9rem; margin-bottom:15px; color:var(--text-muted);">Prochaine séance : <strong>Dimanche 20h</strong></div>
+                <div style="font-size:0.9rem; margin-bottom:5px; color:var(--text-muted); text-align:right;">Prochaine séance : <strong>Dimanche 20h</strong></div>
+                
+                <!-- Compte à rebours -->
+                <div id="countdown" class="countdown-timer">
+                    <div><span id="d">00</span>j</div>
+                    <div><span id="h">00</span>h</div>
+                    <div><span id="m">00</span>m</div>
+                    <div><span id="s">00</span>s</div>
+                </div>
+
                 <a href="https://meet.google.com/" target="_blank" class="btn-meet">
                     <i class="fa-solid fa-video"></i> Rejoindre
                 </a>
@@ -76,6 +89,7 @@
         </div>
     </section>
 
+    <!-- BUREAU -->
     <div class="container">
         <h2 class="section-title reveal">Le Bureau <span>Exécutif</span></h2>
         <div class="bureau-grid" id="bureau">
@@ -103,6 +117,23 @@
         </div>
     </div>
 
+    <!-- STATISTIQUES ANIMEES -->
+    <section class="container stats-section reveal">
+        <div class="stat-item">
+            <div class="stat-number" data-target="150">0</div>
+            <div class="stat-label">Membres Actifs</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="12">0</div>
+            <div class="stat-label">Projets Réalisés</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="5">0</div>
+            <div class="stat-label">Années d'Exp.</div>
+        </div>
+    </section>
+
+    <!-- ACTUALITES -->
     <div class="container news-container" id="news">
         <div class="video-feature reveal" id="video">
             <video poster="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1000" playsinline>
@@ -123,6 +154,26 @@
         </div>
     </div>
 
+    <!-- FAQ (QUESTIONS FREQUENTES) -->
+    <section class="container faq-section reveal" id="faq">
+        <h2 class="section-title">Questions <span>Fréquentes</span></h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <button class="faq-question">Comment rejoindre le bureau ? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer"><p>L'accès au bureau se fait par élection annuelle ou cooptation selon les postes vacants.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Est-ce gratuit ? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer"><p>L'adhésion est soumise à une cotisation symbolique annuelle pour financer les activités.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Où ont lieu les réunions ? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer"><p>Principalement en ligne via Google Meet le dimanche, et parfois en présentiel à l'université.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
         <div class="footer-grid">
             <div>
@@ -148,6 +199,7 @@
         <div style="text-align:center; margin-top:50px; color:var(--text-muted); font-size:0.8rem;">&copy; <span id="year"></span> V.E.D DAJI. Tous droits réservés.</div>
     </footer>
 
+    <!-- NAVIGATION MOBILE STABLE -->
     <nav class="mobile-bottom-nav">
         <a href="#home" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Accueil</span></a>
         <a href="#meet" class="nav-item"><i class="fa-solid fa-video"></i> <span>Live</span></a>

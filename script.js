@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. PRELOADER & DATE ---
+    // --- 1. PRELOADER ---
     const preloader = document.getElementById('preloader');
     if (preloader) {
         setTimeout(() => {
@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     }
     
+    // Année dynamique
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -44,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => { 
             if(entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Optionnel : arrêter d'observer une fois visible
-                // observer.unobserve(entry.target); 
             }
         });
     }, { threshold: 0.1 });
@@ -76,7 +75,118 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 5. SCROLL ET MENU ACTIF ---
+    // --- 5. TYPEWRITER EFFECT (Machine à écrire) ---
+    const textElement = document.querySelector('.typewriter-text');
+    if (textElement) {
+        const words = ["COLLECTIVE.", "AMBITIEUSE.", "VISIONNAIRE."];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 150;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause avant d'effacer
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+        type();
+    }
+
+    // --- 6. COUNTDOWN (Prochain Dimanche 20h) ---
+    const updateCountdown = () => {
+        const now = new Date();
+        const nextMeeting = new Date();
+        
+        // Trouver le prochain dimanche (0 = dimanche)
+        nextMeeting.setDate(now.getDate() + (7 - now.getDay()) % 7);
+        nextMeeting.setHours(20, 0, 0, 0);
+        
+        // Si c'est dimanche après 20h, passer à la semaine pro
+        if(now > nextMeeting) nextMeeting.setDate(nextMeeting.getDate() + 7);
+
+        const diff = nextMeeting - now;
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / 1000 / 60) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        const dEl = document.getElementById('d');
+        if(dEl) {
+            dEl.innerText = d < 10 ? '0' + d : d;
+            document.getElementById('h').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('m').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('s').innerText = s < 10 ? '0' + s : s;
+        }
+    };
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // --- 7. ANIMATION DES STATS ---
+    const stats = document.querySelectorAll('.stat-number');
+    let hasAnimatedStats = false;
+    
+    const animateStats = () => {
+        if (hasAnimatedStats) return;
+        const section = document.querySelector('.stats-section');
+        if(!section) return;
+
+        const triggerBottom = window.innerHeight / 5 * 4;
+        const sectionTop = section.getBoundingClientRect().top;
+
+        if(sectionTop < triggerBottom) {
+            stats.forEach(stat => {
+                const target = +stat.getAttribute('data-target');
+                const increment = target / 50; 
+                
+                const updateCounter = () => {
+                    const c = +stat.innerText;
+                    if(c < target) {
+                        stat.innerText = Math.ceil(c + increment);
+                        setTimeout(updateCounter, 30);
+                    } else {
+                        stat.innerText = target + "+";
+                    }
+                };
+                updateCounter();
+            });
+            hasAnimatedStats = true;
+        }
+    };
+    window.addEventListener('scroll', animateStats);
+
+    // --- 8. FAQ ACCORDION ---
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(q => {
+        q.addEventListener('click', () => {
+            q.classList.toggle('active');
+            const answer = q.nextElementSibling;
+            if (q.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            } else {
+                answer.style.maxHeight = 0;
+            }
+        });
+    });
+
+    // --- 9. SCROLL ET MENU ACTIF ---
     window.addEventListener('scroll', () => {
         const sections = document.querySelectorAll('section, div[id]');
         const navLi = document.querySelectorAll('.mobile-bottom-nav .nav-item');
@@ -140,7 +250,7 @@ if(form) {
     });
 }
 
-// Vérification Admin (Mot de passe simple)
+// Vérification Admin
 window.checkAdmin = function() {
     const input = document.getElementById('adminPass');
     const error = document.getElementById('errorMsg');
