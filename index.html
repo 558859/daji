@@ -2,15 +2,19 @@
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <!-- BLOCAGE DU ZOOM ET DU SCROLL HORIZONTAL -->
+    <!-- BLOCAGE DU ZOOM ET DU SCROLL HORIZONTAL (Stabilité Mobile) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Site officiel de l'association V.E.D DAJI">
     <title>V.E.D DAJI | Excellence & Leadership</title>
     
+    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="images/V.E.D.png">
+    
+    <!-- POLICES ET ICONES -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,13 +50,18 @@
         </div>
     </header>
 
-    <!-- HERO SECTION (MACHINE A ECRIRE) -->
+    <!-- HERO SECTION (VIDÉO DE FOND + TEXTE) -->
     <section class="hero-section" id="home">
+        
+        <!-- VIDÉO DE FOND -->
         <video class="hero-video-bg" autoplay muted loop playsinline>
-            <source src="videos/PEAKFLOWN.mp4" type="video/mp4">
+            <!-- Assure-toi que ta vidéo s'appelle bien video.mp4 et est dans le dossier videos -->
+            <source src="videos/video.mp4.mp4" type="video/mp4">
         </video>
+        <!-- Filtre noir par dessus la vidéo -->
         <div class="video-overlay"></div>
         
+        <!-- CONTENU -->
         <h1>L'INTELLIGENCE <br> <span class="typewriter-text"></span><span class="cursor">|</span></h1>
         <p class="hero-subtitle">La plateforme officielle de l'association VED DAJI. Une communauté d'élite pour un avenir brillant.</p>
         
@@ -94,21 +103,21 @@
         <h2 class="section-title reveal">Le Bureau <span>Exécutif</span></h2>
         <div class="bureau-grid" id="bureau">
             <div class="member-card reveal">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400" class="member-img" alt="Président">
+                <img src="images/president.jpg" class="member-img" alt="Président">
                 <div class="member-overlay">
                     <div class="role">Président</div>
                     <div class="name">Ibrahim Attoumani</div>
                 </div>
             </div>
             <div class="member-card reveal">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400" class="member-img" alt="SG">
+                <img src="images/vice.jpg" class="member-img" alt="SG">
                 <div class="member-overlay">
                     <div class="role">Secrétaire G.</div>
                     <div class="name">Fatoumata Camara</div>
                 </div>
             </div>
             <div class="member-card reveal">
-                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400" class="member-img" alt="Trésorier">
+                <img src="images/sg.jpg" class="member-img" alt="Trésorier">
                 <div class="member-overlay">
                     <div class="role">Trésorier</div>
                     <div class="name">Mamadou Sow</div>
@@ -208,6 +217,7 @@
         <a href="#" class="nav-item" id="mobile-theme-toggle"><i class="fa-solid fa-moon"></i> <span>Thème</span></a>
     </nav>
 
+    <!-- SCRIPT -->
     <script src="script.js"></script>
 </body>
 </html>

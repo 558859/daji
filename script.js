@@ -265,3 +265,139 @@ window.checkAdmin = function() {
         setTimeout(() => { input.style.borderColor = 'var(--border)'; }, 2000);
     }
 }
+
+
+
+/* =========================================
+   LOGIQUE PAYS & TÉLÉPHONE (A AJOUTER)
+========================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // LISTE COMPLETE DES PAYS ET CODES
+    const countries = [
+        { name: "Guinée", code: "+224" },
+        { name: "France", code: "+33" },
+        { name: "Sénégal", code: "+221" },
+        { name: "Côte d'Ivoire", code: "+225" },
+        { name: "Mali", code: "+223" },
+        { name: "Maroc", code: "+212" },
+        { name: "Algérie", code: "+213" },
+        { name: "Tunisie", code: "+216" },
+        { name: "Canada", code: "+1" },
+        { name: "États-Unis", code: "+1" },
+        { name: "Belgique", code: "+32" },
+        { name: "Suisse", code: "+41" },
+        { name: "Allemagne", code: "+49" },
+        { name: "Espagne", code: "+34" },
+        { name: "Italie", code: "+39" },
+        { name: "Royaume-Uni", code: "+44" },
+        { name: "Chine", code: "+86" },
+        { name: "Japon", code: "+81" },
+        { name: "Russie", code: "+7" },
+        { name: "Brésil", code: "+55" },
+        { name: "Inde", code: "+91" },
+        { name: "Turquie", code: "+90" },
+        { name: "Gabon", code: "+241" },
+        { name: "Cameroun", code: "+237" },
+        { name: "Congo (RDC)", code: "+243" },
+        { name: "Congo (Brazzaville)", code: "+242" },
+        { name: "Togo", code: "+228" },
+        { name: "Bénin", code: "+229" },
+        { name: "Burkina Faso", code: "+226" },
+        { name: "Niger", code: "+227" },
+        { name: "Mauritanie", code: "+222" },
+        { name: "Tchad", code: "+235" },
+        { name: "Afrique du Sud", code: "+27" },
+        { name: "Égypte", code: "+20" },
+        { name: "Arabie Saoudite", code: "+966" },
+        { name: "Émirats Arabes Unis", code: "+971" }
+        // Tu peux ajouter d'autres pays ici si nécessaire
+    ];
+
+    // Trier les pays par ordre alphabétique
+    countries.sort((a, b) => a.name.localeCompare(b.name));
+
+    const countrySelect = document.getElementById('countrySelect');
+    const phoneInput = document.getElementById('phoneInput');
+
+    if (countrySelect && phoneInput) {
+        // 1. Remplir le select
+        countrySelect.innerHTML = '<option value="" disabled selected>Choisir un pays...</option>';
+        countries.forEach(c => {
+            const option = document.createElement('option');
+            option.value = c.code;
+            option.textContent = `${c.name} (${c.code})`;
+            countrySelect.appendChild(option);
+        });
+
+        // 2. Quand on change de pays -> Mettre le code dans l'input téléphone
+        countrySelect.addEventListener('change', function() {
+            phoneInput.value = this.value + " "; // Ajoute le code + espace
+            phoneInput.focus(); // Met le curseur dans la case
+        });
+
+        // 3. Empêcher l'utilisateur d'effacer le code pays
+        phoneInput.addEventListener('input', function(e) {
+            const currentCode = countrySelect.value;
+            // Si l'utilisateur essaie d'effacer le code, on le remet
+            if (currentCode && !this.value.startsWith(currentCode)) {
+                // On laisse faire seulement si le champ est vide (reset)
+                if(this.value.length < currentCode.length) {
+                    // Optionnel : avertissement visuel
+                }
+            }
+        });
+    }
+
+    // 4. VALIDATION AU CLICK DU BOUTON
+    const form = document.getElementById('inscriptionForm');
+    const errorMsg = document.getElementById('phone-error');
+
+    if(form) {
+        // Supprimer l'ancien event listener s'il existe (pour éviter les doublons)
+        const newForm = form.cloneNode(true);
+        form.parentNode.replaceChild(newForm, form);
+        
+        newForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const phoneVal = document.getElementById('phoneInput').value.trim();
+            const countryCode = document.getElementById('countrySelect').value;
+            const btn = document.querySelector('.btn-submit');
+
+            // Vérification : Est-ce que le téléphone contient bien le code ?
+            // Et est-ce qu'il y a des chiffres après le code ?
+            if (!phoneVal.startsWith("+") || phoneVal === countryCode || phoneVal.length < (countryCode.length + 4)) {
+                errorMsg.style.display = 'block';
+                errorMsg.innerText = "Numéro invalide. Le code pays (" + countryCode + ") est requis.";
+                document.getElementById('phoneInput').style.borderColor = '#ef4444';
+                
+                // Animation secousse
+                document.getElementById('phoneInput').animate([
+                    { transform: 'translateX(0)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(10px)' },
+                    { transform: 'translateX(0)' }
+                ], { duration: 300 });
+                
+                return; // On arrête tout, pas d'envoi
+            }
+
+            // Si tout est bon :
+            errorMsg.style.display = 'none';
+            document.getElementById('phoneInput').style.borderColor = 'var(--border)';
+
+            // Simulation envoi
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Envoi...';
+            btn.style.opacity = "0.8";
+            
+            setTimeout(() => {
+                document.getElementById('form-ui').style.display = 'none';
+                document.getElementById('success-ui').style.display = 'block';
+                btn.innerHTML = originalText;
+            }, 1500);
+        });
+    }
+});

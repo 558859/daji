@@ -36,29 +36,60 @@
 
         <div id="member-content" class="content-box active">
             <div id="form-ui">
-                <h2 style="text-align:center; margin-bottom:20px;">Adhésion</h2>
+                <h2 style="text-align:center; margin-bottom:20px;">Adhésion Membre</h2>
                 <form id="inscriptionForm">
                     <div class="form-grid">
+                        <!-- NOM -->
                         <div class="input-group">
-                            <label>Nom</label><input type="text" class="custom-input" required><i class="fa-solid fa-user input-icon"></i>
+                            <label>Nom</label>
+                            <input type="text" class="custom-input" required>
+                            <i class="fa-solid fa-user input-icon"></i>
                         </div>
+
+                        <!-- PRÉNOM -->
                         <div class="input-group">
-                            <label>Prénom</label><input type="text" class="custom-input" required><i class="fa-regular fa-user input-icon"></i>
+                            <label>Prénom</label>
+                            <input type="text" class="custom-input" required>
+                            <i class="fa-regular fa-user input-icon"></i>
                         </div>
+
+                        <!-- SEXE (NOUVEAU) -->
                         <div class="input-group full-width" style="grid-column: 1 / -1;">
-                            <label>Pays</label><select class="custom-input"><option>Guinée</option><option>France</option></select><i class="fa-solid fa-globe input-icon"></i>
+                            <label>Sexe</label>
+                            <select class="custom-input" required>
+                                <option value="" disabled selected>Choisir...</option>
+                                <option value="H">Homme</option>
+                                <option value="F">Femme</option>
+                            </select>
+                            <i class="fa-solid fa-venus-mars input-icon"></i>
                         </div>
+
+                        <!-- PAYS (Tous les pays gérés par JS) -->
                         <div class="input-group full-width" style="grid-column: 1 / -1;">
-                            <label>Téléphone</label><input type="tel" class="custom-input" placeholder="+224..." required><i class="fa-solid fa-phone input-icon"></i>
+                            <label>Pays de résidence</label>
+                            <select id="countrySelect" class="custom-input" required>
+                                <option value="" disabled selected>Chargement des pays...</option>
+                            </select>
+                            <i class="fa-solid fa-globe input-icon"></i>
+                        </div>
+
+                        <!-- TÉLÉPHONE (Code auto) -->
+                        <div class="input-group full-width" style="grid-column: 1 / -1;">
+                            <label>Téléphone (WhatsApp)</label>
+                            <input type="tel" id="phoneInput" class="custom-input" placeholder="Choisissez un pays d'abord" required>
+                            <i class="fa-solid fa-phone input-icon"></i>
+                            <small id="phone-error" style="color:#ef4444; font-size:0.75rem; display:none; margin-top:5px;">Le code pays est obligatoire (+XXX).</small>
                         </div>
                     </div>
-                    <button type="submit" class="btn-submit">Valider</button>
+                    <button type="submit" class="btn-submit">Valider l'inscription</button>
                 </form>
             </div>
+            
             <div id="success-ui" style="display:none; text-align:center;">
-                <h3 style="color:var(--primary);">Inscription réussie !</h3>
-                <p style="margin:10px 0;">Bienvenue dans l'équipe.</p>
-                <button onclick="location.reload()" class="btn-submit">Nouveau membre</button>
+                <div style="font-size:3rem; color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-check-circle"></i></div>
+                <h3 style="color:var(--text-main);">Félicitations !</h3>
+                <p style="margin:10px 0; color:var(--text-muted);">Votre demande a été envoyée au bureau.</p>
+                <button onclick="location.reload()" class="btn-submit">Retour</button>
             </div>
         </div>
 
