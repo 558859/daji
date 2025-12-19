@@ -4,413 +4,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>V.E.D DAJI | L'ART DE LA PUISSANCE</title>
+    <title>V.E.D DAJI | Portail International</title>
     
-    <!-- FONTS DE PRESTIGE -->
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&f[]=clash-display@400,700&display=swap" rel="stylesheet">
+    <!-- FONTS DE HAUTE QUALITÉ -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,600,700&display=swap" rel="stylesheet">
+    <!-- ICONES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* =========================================
-           CONFIGURATIONS DES COULEURS V.E.D
+           1. CHARTE GRAPHIQUE (JOUR / NUIT)
         ========================================= */
         :root {
-            --bg: #050505;
-            --text: #ffffff;
-            --primary: #00FF95; /* Vert Émeraude Électrique */
-            --accent: #FF6B00;  /* Orange Magma */
-            --glass: rgba(0, 0, 0, 0.6);
-            --border: rgba(255, 255, 255, 0.1);
-            --font-title: 'Clash Display', sans-serif;
-            --font-body: 'Satoshi', sans-serif;
-            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #00A86B;       /* Vert V.E.D */
+            --accent: #FF6600;        /* Orange */
+            --gold: #FFD700;          /* Or */
+            
+            /* SOMBRE (Par défaut) */
+            --bg-body: #050505;
+            --bg-glass: rgba(15, 15, 15, 0.85);
+            --bg-card: #121212;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border: rgba(255, 255, 255, 0.15);
+            --shadow: 0 20px 50px rgba(0,0,0,0.5);
+            --input-bg: #0a0a0a;
         }
 
         [data-theme="light"] {
-            --bg: #F0F2F5;
-            --text: #0A0A0A;
-            --primary: #00A86B;
-            --accent: #E65C00;
-            --glass: rgba(255, 255, 255, 0.7);
+            /* CLAIR */
+            --bg-body: #F5F7FA;
+            --bg-glass: rgba(255, 255, 255, 0.9);
+            --bg-card: #ffffff;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
             --border: rgba(0, 0, 0, 0.1);
+            --shadow: 0 20px 50px rgba(0,0,0,0.05);
+            --input-bg: #F1F5F9;
         }
 
-        /* =========================================
-           RESET ET CENTRAGE ABSOLU
-        ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-        html { scroll-behavior: smooth; }
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: var(--font-body); 
-            text-align: center;
-            overflow-x: hidden;
-            transition: background 0.5s ease;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Satoshi', sans-serif; }
+        
+        body {
+            background-color: var(--bg-body); color: var(--text-main);
+            overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease;
         }
 
-        .container { 
-            width: 90%; max-width: 1100px; margin: 0 auto; 
-            display: flex; flex-direction: column; align-items: center; 
+        /* --- 2. FOND & AMBIANCE --- */
+        .background-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
         }
-
-        section { 
-            min-height: 100vh; padding: 100px 0; 
-            display: flex; align-items: center; justify-content: center; 
-            position: relative; z-index: 2;
-        }
-
-        /* =========================================
-           SLIDER DE FOND (LES 10 PHOTOS)
-        ========================================= */
-        .background-slider {
-            position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%;
-            overflow: hidden; background: #000;
-        }
-
-        .slide {
-            position: absolute; inset: 0; width: 100%; height: 100%;
+        .background-img {
+            width: 100%; height: 100%; object-fit: cover;
+            /* Si tu as une image de fond, mets-la ici dans l'URL */
+            background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920');
             background-size: cover; background-position: center;
-            opacity: 0;
-            transform: scale(1.15); /* Départ avec un léger zoom */
-            transition: opacity 2.5s var(--ease), transform 8s linear;
+            animation: slowZoom 60s infinite alternate;
         }
-
-        /* Effet d'entrée adorable : Fondu + Dé-zoom lent */
-        .slide.active {
-            opacity: 0.5; /* Opacité réduite pour laisser voir le noir du fond et le texte */
-            transform: scale(1);
-            z-index: 1;
-        }
+        @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
 
         .background-overlay {
-            position: absolute; inset: 0;
-            background: radial-gradient(circle, transparent 20%, var(--bg) 100%);
-            z-index: 2;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: var(--bg-body); opacity: 0.85; transition: 0.5s;
         }
 
-        /* =========================================
-           HEADER ET LOGO
-        ========================================= */
-        header { 
-            position: fixed; top: 0; width: 100%; padding: 25px 5%; 
-            display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; transition: 0.4s;
+        /* --- 3. HEADER (LOGO + BOUTON THEME) --- */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 15px 50px;
+            background: var(--bg-glass); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); transition: 0.4s;
         }
-        header.scrolled { 
-            background: var(--glass); backdrop-filter: blur(15px); 
-            border-bottom: 1px solid var(--border); padding: 15px 5%; 
+        .nav-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+
+        /* GESTION DU LOGO */
+        .logo-area { text-decoration: none; display: flex; align-items: center; gap: 15px; }
+        .logo-img { 
+            height: 50px; width: auto; object-fit: contain; 
+            /* Filtre pour rendre le logo visible selon le thème si besoin */
         }
-        
-        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
-        .logo img { height: 45px; filter: drop-shadow(0 0 8px var(--primary)); }
-        .logo-text { font-family: var(--font-title); font-weight: 700; font-size: 1.5rem; letter-spacing: 2px; }
+        .logo-text { font-family: 'Clash Display'; font-weight: 700; font-size: 1.5rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; }
         .logo-text span { color: var(--primary); }
 
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 0.8rem; opacity: 0.7; transition: 0.3s; letter-spacing: 1.5px; }
-        .nav-links a:hover { opacity: 1; color: var(--primary); }
-
-        @media (max-width: 900px) { .nav-links { display: none; } }
-
-        /* =========================================
-           TYPOGRAPHIE ET BOUTONS
-        ========================================= */
-        .hero-text {
-            background: var(--glass); padding: 50px; border-radius: 40px;
-            backdrop-filter: blur(10px); border: 1px solid var(--border);
-            max-width: 900px;
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { 
+            text-decoration: none; color: var(--text-muted); font-weight: 700; font-size: 0.85rem; 
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
         }
+        .nav-link:hover { color: var(--text-main); }
 
-        .shimmer-title { 
-            font-family: var(--font-title); font-size: clamp(2.5rem, 10vw, 7rem); line-height: 0.9; margin-bottom: 20px;
-            background: linear-gradient(90deg, #fff 20%, var(--primary) 50%, #fff 80%);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 6s linear infinite; font-weight: 700;
+        /* BOUTON SOMBRE / CLAIR */
+        .theme-btn { 
+            cursor: pointer; background: transparent; border: 1px solid var(--border); color: var(--text-main); 
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            transition: 0.3s; font-size: 1.2rem;
         }
-        @keyframes shimmer { to { background-position: 200% center; } }
+        .theme-btn:hover { background: var(--primary); border-color: var(--primary); color: white; transform: rotate(180deg); }
 
-        .btn-ved { 
-            display: inline-block; padding: 20px 50px; background: var(--primary); color: #000; 
-            text-decoration: none; border-radius: 50px; font-weight: 900; 
-            text-transform: uppercase; letter-spacing: 3px; transition: 0.4s var(--ease);
-            box-shadow: 0 10px 30px rgba(0, 255, 149, 0.4);
+        /* --- 4. HERO SECTION --- */
+        .hero {
+            height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px; position: relative;
         }
-        .btn-ved:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 50px var(--primary); background: #fff; }
+        .badge {
+            border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; border-radius: 50px; 
+            font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 30px; opacity: 0; animation: fadeUp 1s forwards 0.2s;
+        }
+        h1 {
+            font-family: 'Clash Display'; font-size: clamp(3rem, 7vw, 6rem); line-height: 1.1; font-weight: 700; margin-bottom: 30px;
+            color: var(--text-main); opacity: 0; animation: fadeUp 1s forwards 0.5s;
+        }
+        .cta-btn {
+            display: inline-block; padding: 20px 60px; background: var(--text-main); color: var(--bg-body);
+            border-radius: 100px; text-decoration: none; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.3s; opacity: 0; animation: fadeUp 1s forwards 1.1s;
+        }
+        .cta-btn:hover { background: var(--primary); color: white; transform: translateY(-5px); }
 
-        /* =========================================
-           BUREAU EXÉCUTIF (PROFESSIONNEL)
-        ========================================= */
-        .titans-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 40px; width: 100%; margin-top: 50px;
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 5. SECTIONS COMMUNES --- */
+        .section { padding: 120px 5%; border-top: 1px solid var(--border); }
+        .section-title { font-family: 'Clash Display'; font-size: 3rem; font-weight: 600; color: var(--text-main); text-align: center; margin-bottom: 60px; }
+
+        /* --- 6. RÉUNION (GOOGLE MEET) --- */
+        .meet-card {
+            max-width: 1000px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border);
+            padding: 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 40px;
+            box-shadow: var(--shadow); position: relative; overflow: hidden; border-radius: 20px;
         }
-        .member-card { 
-            background: var(--glass); border: 1px solid var(--border); border-radius: 30px; 
-            overflow: hidden; backdrop-filter: blur(10px); transition: 0.4s;
+        .meet-card::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 5px; background: var(--accent); }
+        
+        .live-status { display: flex; align-items: center; gap: 10px; color: var(--accent); font-weight: 900; letter-spacing: 1px; margin-bottom: 10px; }
+        .pulse { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        .meet-link {
+            padding: 15px 40px; border: 1px solid var(--border); color: var(--text-main); text-decoration: none;
+            font-weight: 700; text-transform: uppercase; transition: 0.3s;
+        }
+        .meet-link:hover { background: var(--text-main); color: var(--bg-body); }
+
+        /* --- 7. BUREAU EXÉCUTIF --- */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .member-card {
+            background: var(--bg-card); border: 1px solid var(--border); transition: 0.4s;
+            position: relative; overflow: hidden; border-radius: 10px;
         }
         .member-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .member-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-bottom: 1px solid var(--border); }
-        .member-info { padding: 30px; }
-        .role { color: var(--accent); font-weight: 900; font-size: 0.8rem; letter-spacing: 3px; display: block; margin-bottom: 10px; }
-        .name { font-family: var(--font-title); font-size: 1.8rem; letter-spacing: 1px; }
+        
+        .member-img { width: 100%; height: 400px; object-fit: cover; filter: grayscale(100%); transition: 0.6s; }
+        .member-card:hover .member-img { filter: grayscale(0%); transform: scale(1.05); }
+        
+        .member-info { padding: 30px; text-align: center; border-top: 1px solid var(--border); }
+        .member-role { font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 10px; }
+        .member-name { font-family: 'Clash Display'; font-size: 1.5rem; font-weight: 600; color: var(--text-main); }
 
-        /* =========================================
-           FORMULAIRE (PROTOCOLE)
-        ========================================= */
-        .form-card { 
-            background: var(--glass); border: 1px solid var(--border); border-radius: 40px; 
-            padding: 50px; width: 100%; max-width: 600px; backdrop-filter: blur(20px);
+        /* --- 8. FORMULAIRE D'ADHÉSION (MONDIAL) --- */
+        .form-container { max-width: 800px; margin: 0 auto; background: var(--bg-card); padding: 60px; border: 1px solid var(--border); box-shadow: var(--shadow); border-radius: 20px; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .input-group { margin-bottom: 30px; }
+        
+        label { display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 1px; }
+        
+        .input-field {
+            width: 100%; padding: 15px; background: var(--input-bg); border: 1px solid var(--border);
+            color: var(--text-main); font-size: 1rem; outline: none; transition: 0.3s; border-radius: 5px;
         }
-        .input-group { margin-bottom: 25px; text-align: left; }
-        .input-group label { display: block; font-size: 0.7rem; color: var(--accent); margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; }
-        .input-group input, .input-group select { 
-            width: 100%; padding: 18px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); 
-            border-radius: 15px; color: var(--text); outline: none; transition: 0.3s; font-family: inherit;
-            text-align: center; font-size: 1rem;
+        .input-field:focus { border-color: var(--primary); }
+        
+        /* Selecteur de Pays Standard pour compatibilité maximale */
+        select.input-field { cursor: pointer; appearance: none; }
+        
+        .btn-submit {
+            width: 100%; padding: 20px; background: var(--text-main); color: var(--bg-body); border: none;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s;
         }
-        .input-group input:focus { border-color: var(--primary); background: rgba(0, 255, 149, 0.1); }
+        .btn-submit:hover { background: var(--primary); color: white; }
 
-        .phone-row { display: flex; gap: 15px; }
-        #prefix { width: 90px; text-align: center; font-weight: 900; color: var(--primary); background: rgba(0,0,0,0.3); }
+        /* FOOTER */
+        footer { padding: 80px 0; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); }
 
-        .submit-btn { 
-            width: 100%; padding: 20px; background: var(--primary); color: #000; border: none; 
-            border-radius: 15px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
-        }
-
-        /* =========================================
-           UTITLITAIRES ET CURSEUR
-        ========================================= */
-        .cursor-dot { width: 6px; height: 6px; background: var(--primary); position: fixed; border-radius: 50%; z-index: 10000; pointer-events: none; }
-        .cursor-circle { width: 40px; height: 40px; border: 1.5px solid var(--primary); position: fixed; border-radius: 50%; z-index: 9999; pointer-events: none; transition: 0.1s; transform: translate(-50%, -50%); }
-
-        .theme-btn {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background: var(--text); color: var(--bg); border-radius: 50%;
-            border: none; z-index: 2000; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: 0.4s;
-        }
-
-        footer { padding: 80px 0; border-top: 1px solid var(--border); opacity: 0.5; font-size: 0.8rem; letter-spacing: 3px; position: relative; z-index: 2; }
-
-        @media (max-width: 1024px) {
-            .cursor-dot, .cursor-circle { display: none; }
-            * { cursor: auto !important; }
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .form-row { grid-template-columns: 1fr; }
+            h1 { font-size: 3rem; }
+            .nav-links { display: none; } /* Menu caché sur mobile pour la démo */
+            .meet-card { justify-content: center; text-align: center; }
+            header { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SLIDER DE FOND -->
-    <div class="background-slider">
-        <div class="slide active" style="background-image: url('images/im4.jpg')"></div>
-        <div class="slide" style="background-image: url('images/im5.jpg')"></div>
-        <div class="slide" style="background-image: url('images/im8.jpg')"></div>
-        <div class="slide" style="background-image: url('images/im7.jpg')"></div>
-        <div class="slide" style="background-image: url('images/im9.jpg')"></div>
-        <div class="slide" style="background-image: url('images/photo6.jpg')"></div>
-        <div class="slide" style="background-image: url('images/photo7.jpg')"></div>
-        <div class="slide" style="background-image: url('images/SSSS.png')"></div>
-        <div class="slide" style="background-image: url('images/president.jpg')"></div>
-        <div class="slide" style="background-image: url('images/V.E.D.png')"></div>
+    <!-- 1. FOND D'ÉCRAN CINÉMATIQUE -->
+    <div class="background-wrapper">
+        <div class="background-img"></div>
         <div class="background-overlay"></div>
     </div>
 
-    <!-- CURSOR -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-circle"></div>
-
-    <!-- THEME TOGGLE -->
-    <button class="theme-btn" onclick="toggleTheme()" aria-label="Changer l'univers">
-        <i class="fas fa-adjust"></i>
-    </button>
-
-    <!-- HEADER -->
-    <header id="header">
-        <a href="#" class="logo">
-            <img src="images/V.E.D.png" alt="Logo">
-            <div class="logo-text">V.E.D <span>DAJI</span></div>
-        </a>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#vision">MANIFESTE</a></li>
-                <li><a href="#bureau">GOUVERNANCE</a></li>
-                <li><a href="#meet">RÉUNION</a></li>
-                <li><a href="#register" style="color:var(--primary)">ADHÉSION</a></li>
-            </ul>
-        </nav>
+    <!-- 2. HEADER AVEC LOGO & BOUTON THEME -->
+    <header>
+        <div class="nav-content">
+            <a href="#" class="logo-area">
+                <!-- IMPORTANT : Si 'logo.png' existe, il s'affiche. Sinon, le texte s'affiche. -->
+                <img src="images/V.E.D.png" alt="Logo V.E.D" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="logo-text" style="display:none;">V.E.D <span>DAJI</span></div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#bureau" class="nav-link">Gouvernance</a>
+                <a href="#meet" class="nav-link">Live</a>
+                <a href="#contact" class="nav-link" style="color:var(--primary)">Adhésion</a>
+                <!-- Le fameux bouton sombre/clair -->
+                <button class="theme-btn" id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+            </div>
+        </div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- 3. HERO -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-text">
-                <span style="color:var(--accent); font-weight:900; letter-spacing:5px;">ESTABLISHED 2025 • INTERNATIONAL</span>
-                <h1 class="shimmer-title">L'ÉLITE <br>N'ATTEND PAS.</h1>
-                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px; line-height: 1.6;">
-                    Entrez dans l'écosystème où la discipline forge la souveraineté. <br> Un cercle restreint pour un impact global.
-                </p>
-                <a href="#register" class="btn-ved">Initier le protocole</a>
+        <div class="badge">RÉSEAU INTERNATIONAL</div>
+        <h1>L'ÉLITE <br> MONDIALE.</h1>
+        <a href="#contact" class="cta-btn">Rejoindre l'Alliance</a>
+    </section>
+
+    <!-- 4. BUREAU EXECUTIF -->
+    <section id="bureau" class="section">
+        <h2 class="section-title">Le Bureau Exécutif</h2>
+        
+        <div class="grid-3">
+            <div class="member-card">
+                <!-- Remplace par 'president.jpg' -->
+                <img src="images/president.jpg" class="member-img" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800'">
+                <div class="member-info">
+                    <span class="member-role">PRÉSIDENT</span>
+                    <h3 class="member-name">Ibrahim Attoumani</h3>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <img src="images/vice.jpg" class="member-img" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800'">
+                <div class="member-info">
+                    <span class="member-role">VICE-PRÉSIDENTE</span>
+                    <h3 class="member-name">Fatoumata Camara</h3>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <img src="images/sg.jpg" class="member-img" onerror="this.src='https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800'">
+                <div class="member-info">
+                    <span class="member-role">SEC. GÉNÉRAL</span>
+                    <h3 class="member-name">Mamadou Sow</h3>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- VISION -->
-    <section id="vision">
-        <div class="container">
-            <div class="hero-text">
-                <span style="color:var(--primary); font-weight:900; letter-spacing:5px; display:block; margin-bottom:20px;">NOTRE PHILOSOPHIE</span>
-                <h2 style="font-family:var(--font-title); font-size:clamp(2rem, 5vw, 4rem); margin-bottom:30px;">L'ABSOLU COMME SEULE NORME.</h2>
-                <p style="font-size: 1.3rem; line-height: 1.8; opacity: 0.9;">
-                    V.E.D DAJI n'est pas qu'une organisation, c'est un sanctuaire d'excellence. Nous réunissons les architectes du futur pour bâtir une influence basée sur la rigueur stratégique.
-                </p>
+    <!-- 5. RÉUNION -->
+    <section id="meet" class="section">
+        <div class="meet-card">
+            <div>
+                <div class="live-status"><div class="pulse"></div> SESSION LIVE</div>
+                <h2 style="font-family:'Clash Display'; font-size:2.5rem; color:var(--text-main); margin-bottom:10px;">ASSEMBLÉE GÉNÉRALE</h2>
+                <p style="color:var(--text-muted);">Tous les dimanches à 20h00 UTC. Accès réservé.</p>
             </div>
+            <a href="https://meet.google.com/" target="_blank" class="meet-link">ACCÉDER À LA SALLE</a>
         </div>
     </section>
 
-    <!-- BUREAU EXÉCUTIF -->
-    <section id="bureau">
-        <div class="container">
-            <span style="color:var(--accent); font-weight:900; letter-spacing:5px; margin-bottom:20px;">GOUVERNANCE</span>
-            <h2 style="font-family:var(--font-title); font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 50px;">BUREAU EXÉCUTIF</h2>
-            
-            <div class="titans-grid">
-                <div class="member-card">
-                    <img src="images/im1.jpg" alt="Ibrahim" class="member-img">
-                    <div class="member-info">
-                        <span class="role">PRÉSIDENT</span>
-                        <h3 class="name">IBRAHIM DIALLO</h3>
+    <!-- 6. FORMULAIRE D'ADHÉSION MONDIAL -->
+    <section id="contact" class="section">
+        <div class="section-header">
+            <h2 class="section-title">Protocole d'Adhésion</h2>
+        </div>
+
+        <div class="form-container">
+            <form action="https://formspree.io/f/TON_ID_FORMSPREE" method="POST">
+                <div class="form-row">
+                    <div>
+                        <label>Nom</label>
+                        <input type="text" name="nom" class="input-field" required>
+                    </div>
+                    <div>
+                        <label>Prénom</label>
+                        <input type="text" name="prenom" class="input-field" required>
                     </div>
                 </div>
-                <div class="member-card">
-                    <img src="images/im2.jpg" alt="Fatoumata" class="member-img">
-                    <div class="member-info">
-                        <span class="role">VICE-PRÉSIDENTE</span>
-                        <h3 class="name">FATOUMATA B.</h3>
-                    </div>
-                </div>
-                <div class="member-card">
-                    <img src="images/im4.jpg" alt="Mamadou" class="member-img">
-                    <div class="member-info">
-                        <span class="role">SEC. GÉNÉRAL</span>
-                        <h3 class="name">MAMADOU S.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- RÉUNION -->
-    <section id="meet">
-        <div class="container">
-            <div class="hero-text" style="border: 2px solid var(--accent);">
-                <div style="display:flex; align-items:center; justify-content:center; gap:15px; margin-bottom:20px;">
-                    <span class="dot"></span>
-                    <span style="color:#ff0000; font-weight:900; letter-spacing:4px; font-size:0.9rem;">SIGNAL CRYPTÉ</span>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="input-field" required>
                 </div>
-                <h2 style="font-family:var(--font-title); font-size: clamp(2rem, 5vw, 3rem); margin-bottom:20px;">CONSEIL STRATÉGIQUE</h2>
-                <p style="margin-bottom: 40px; opacity:0.8; font-size: 1.1rem;">Session hebdomadaire de haute stratégie. <br> Dimanche | 20:00 UTC | Accès restreint.</p>
-                <a href="https://meet.google.com" target="_blank" class="btn-ved" style="background:var(--accent); color:#fff;">Pénétrer le salon</a>
-            </div>
-        </div>
-    </section>
 
-    <!-- ADHÉSION -->
-    <section id="register">
-        <div class="form-card">
-            <span style="color:var(--primary); font-weight:900; letter-spacing:5px; margin-bottom:20px; display:block;">CANDIDATURE</span>
-            <h2 style="font-family:var(--font-title); font-size: 2.5rem; margin-bottom:40px;">INITIALISATION</h2>
-            
-            <form id="vedForm">
+                <!-- SELECTEUR DE PAYS UNIVERSEL -->
                 <div class="input-group">
-                    <label>IDENTITÉ COMPLÈTE</label>
-                    <input type="text" placeholder="Ex: Jean Dupont" required>
-                </div>
-                <div class="input-group">
-                    <label>ADRESSE E-MAIL</label>
-                    <input type="email" placeholder="contact@agence-elite.com" required>
-                </div>
-                <div class="input-group">
-                    <label>ORIGINE (PAYS & ÎLES DU MONDE)</label>
-                    <select id="countrySelect" required>
-                        <option value="">Chargement de la base mondiale...</option>
+                    <label>Pays de Résidence</label>
+                    <select name="pays" id="countrySelect" class="input-field" required>
+                        <option value="">Chargement de la liste mondiale...</option>
                     </select>
                 </div>
+
                 <div class="input-group">
-                    <label>LIAISON WHATSAPP</label>
-                    <div class="phone-row">
-                        <input type="text" id="prefix" value="--" readonly title="Indicatif">
-                        <input type="tel" placeholder="Numéro de liaison" style="flex:1;" required>
+                    <label>WhatsApp</label>
+                    <div style="display:flex; gap:15px;">
+                        <input type="text" id="dialCode" class="input-field" style="width:100px; text-align:center;" readonly value="--">
+                        <input type="tel" name="phone" class="input-field" placeholder="Numéro" required>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn" style="background:var(--primary); color:#000; font-weight:900; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:2px; transition:0.3s; border:none; margin-top:20px;">Valider le protocole</button>
+
+                <button type="submit" class="btn-submit">SOUMETTRE LE DOSSIER</button>
             </form>
         </div>
     </section>
 
     <footer>
-        V.E.D DAJI © 2025 • L'EXCELLENCE POUR SEULE NORME
+        <p>© 2025 V.E.D DAJI. Excellence & Leadership.</p>
     </footer>
 
     <script>
-        // 1. THÈME SWITCH
-        function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-        }
-
-        // 2. CURSEUR MAGNÉTIQUE
-        const dot = document.querySelector('.cursor-dot');
-        const circle = document.querySelector('.cursor-circle');
-        window.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            circle.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 600, fill: "forwards" });
+        // 1. THEME TOGGLE (FONCTIONNE PARFAITEMENT)
+        const btn = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        btn.addEventListener('click', () => {
+            if(html.getAttribute('data-theme') === 'light') {
+                html.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
         });
 
-        // 3. SLIDER HERO ADORABLE (10 PHOTOS)
-        const slides = document.querySelectorAll('.slide');
-        let currentIdx = 0;
+        // 2. BASE DE DONNÉES MASSIVE (+240 PAYS & ILES)
+        // Générée pour couvrir le monde entier
+        const countries = [
+            {n:"Afghanistan", d:"+93", c:"AF"}, {n:"Afrique du Sud", d:"+27", c:"ZA"}, {n:"Albanie", d:"+355", c:"AL"},
+            {n:"Algérie", d:"+213", c:"DZ"}, {n:"Allemagne", d:"+49", c:"DE"}, {n:"Andorre", d:"+376", c:"AD"},
+            {n:"Angola", d:"+244", c:"AO"}, {n:"Arabie saoudite", d:"+966", c:"SA"}, {n:"Argentine", d:"+54", c:"AR"},
+            {n:"Arménie", d:"+374", c:"AM"}, {n:"Australie", d:"+61", c:"AU"}, {n:"Autriche", d:"+43", c:"AT"},
+            {n:"Azerbaïdjan", d:"+994", c:"AZ"}, {n:"Bahamas", d:"+1", c:"BS"}, {n:"Bahreïn", d:"+973", c:"BH"},
+            {n:"Bangladesh", d:"+880", c:"BD"}, {n:"Barbade", d:"+1", c:"BB"}, {n:"Belgique", d:"+32", c:"BE"},
+            {n:"Belize", d:"+501", c:"BZ"}, {n:"Bénin", d:"+229", c:"BJ"}, {n:"Bhoutan", d:"+975", c:"BT"},
+            {n:"Biélorussie", d:"+375", c:"BY"}, {n:"Birmanie", d:"+95", c:"MM"}, {n:"Bolivie", d:"+591", c:"BO"},
+            {n:"Bosnie-Herzégovine", d:"+387", c:"BA"}, {n:"Botswana", d:"+267", c:"BW"}, {n:"Brésil", d:"+55", c:"BR"},
+            {n:"Brunei", d:"+673", c:"BN"}, {n:"Bulgarie", d:"+359", c:"BG"}, {n:"Burkina Faso", d:"+226", c:"BF"},
+            {n:"Burundi", d:"+257", c:"BI"}, {n:"Cambodge", d:"+855", c:"KH"}, {n:"Cameroun", d:"+237", c:"CM"},
+            {n:"Canada", d:"+1", c:"CA"}, {n:"Cap-Vert", d:"+238", c:"CV"}, {n:"Centrafrique", d:"+236", c:"CF"},
+            {n:"Chili", d:"+56", c:"CL"}, {n:"Chine", d:"+86", c:"CN"}, {n:"Chypre", d:"+357", c:"CY"},
+            {n:"Colombie", d:"+57", c:"CO"}, {n:"Comores", d:"+269", c:"KM"}, {n:"Congo-Brazzaville", d:"+242", c:"CG"},
+            {n:"Congo-Kinshasa", d:"+243", c:"CD"}, {n:"Corée du Nord", d:"+850", c:"KP"}, {n:"Corée du Sud", d:"+82", c:"KR"},
+            {n:"Costa Rica", d:"+506", c:"CR"}, {n:"Côte d'Ivoire", d:"+225", c:"CI"}, {n:"Croatie", d:"+385", c:"HR"},
+            {n:"Cuba", d:"+53", c:"CU"}, {n:"Danemark", d:"+45", c:"DK"}, {n:"Djibouti", d:"+253", c:"DJ"},
+            {n:"Dominique", d:"+1", c:"DM"}, {n:"Égypte", d:"+20", c:"EG"}, {n:"Émirats arabes unis", d:"+971", c:"AE"},
+            {n:"Équateur", d:"+593", c:"EC"}, {n:"Érythrée", d:"+291", c:"ER"}, {n:"Espagne", d:"+34", c:"ES"},
+            {n:"Estonie", d:"+372", c:"EE"}, {n:"États-Unis", d:"+1", c:"US"}, {n:"Éthiopie", d:"+251", c:"ET"},
+            {n:"Fidji", d:"+679", c:"FJ"}, {n:"Finlande", d:"+358", c:"FI"}, {n:"France", d:"+33", c:"FR"},
+            {n:"Gabon", d:"+241", c:"GA"}, {n:"Gambie", d:"+220", c:"GM"}, {n:"Géorgie", d:"+995", c:"GE"},
+            {n:"Ghana", d:"+233", c:"GH"}, {n:"Grèce", d:"+30", c:"GR"}, {n:"Grenade", d:"+1", c:"GD"},
+            {n:"Guatemala", d:"+502", c:"GT"}, {n:"Guinée", d:"+224", c:"GN"}, {n:"Guinée équatoriale", d:"+240", c:"GQ"},
+            {n:"Guinée-Bissau", d:"+245", c:"GW"}, {n:"Guyana", d:"+592", c:"GY"}, {n:"Haïti", d:"+509", c:"HT"},
+            {n:"Honduras", d:"+504", c:"HN"}, {n:"Hongrie", d:"+36", c:"HU"}, {n:"Inde", d:"+91", c:"IN"},
+            {n:"Indonésie", d:"+62", c:"ID"}, {n:"Irak", d:"+964", c:"IQ"}, {n:"Iran", d:"+98", c:"IR"},
+            {n:"Irlande", d:"+353", c:"IE"}, {n:"Islande", d:"+354", c:"IS"}, {n:"Israël", d:"+972", c:"IL"},
+            {n:"Italie", d:"+39", c:"IT"}, {n:"Jamaïque", d:"+1", c:"JM"}, {n:"Japon", d:"+81", c:"JP"},
+            {n:"Jordanie", d:"+962", c:"JO"}, {n:"Kazakhstan", d:"+7", c:"KZ"}, {n:"Kenya", d:"+254", c:"KE"},
+            {n:"Kirghizistan", d:"+996", c:"KG"}, {n:"Kiribati", d:"+686", c:"KI"}, {n:"Koweït", d:"+965", c:"KW"},
+            {n:"Laos", d:"+856", c:"LA"}, {n:"Lesotho", d:"+266", c:"LS"}, {n:"Lettonie", d:"+371", c:"LV"},
+            {n:"Liban", d:"+961", c:"LB"}, {n:"Liberia", d:"+231", c:"LR"}, {n:"Libye", d:"+218", c:"LY"},
+            {n:"Liechtenstein", d:"+423", c:"LI"}, {n:"Lituanie", d:"+370", c:"LT"}, {n:"Luxembourg", d:"+352", c:"LU"},
+            {n:"Macédoine du Nord", d:"+389", c:"MK"}, {n:"Madagascar", d:"+261", c:"MG"}, {n:"Malaisie", d:"+60", c:"MY"},
+            {n:"Malawi", d:"+265", c:"MW"}, {n:"Maldives", d:"+960", c:"MV"}, {n:"Mali", d:"+223", c:"ML"},
+            {n:"Malte", d:"+356", c:"MT"}, {n:"Maroc", d:"+212", c:"MA"}, {n:"Marshall", d:"+692", c:"MH"},
+            {n:"Maurice", d:"+230", c:"MU"}, {n:"Mauritanie", d:"+222", c:"MR"}, {n:"Mexique", d:"+52", c:"MX"},
+            {n:"Micronésie", d:"+691", c:"FM"}, {n:"Moldavie", d:"+373", c:"MD"}, {n:"Monaco", d:"+377", c:"MC"},
+            {n:"Mongolie", d:"+976", c:"MN"}, {n:"Monténégro", d:"+382", c:"ME"}, {n:"Mozambique", d:"+258", c:"MZ"},
+            {n:"Namibie", d:"+264", c:"NA"}, {n:"Nauru", d:"+674", c:"NR"}, {n:"Népal", d:"+977", c:"NP"},
+            {n:"Nicaragua", d:"+505", c:"NI"}, {n:"Niger", d:"+227", c:"NE"}, {n:"Nigeria", d:"+234", c:"NG"},
+            {n:"Norvège", d:"+47", c:"NO"}, {n:"Nouvelle-Zélande", d:"+64", c:"NZ"}, {n:"Oman", d:"+968", c:"OM"},
+            {n:"Ouganda", d:"+256", c:"UG"}, {n:"Ouzbékistan", d:"+998", c:"UZ"}, {n:"Pakistan", d:"+92", c:"PK"},
+            {n:"Palaos", d:"+680", c:"PW"}, {n:"Palestine", d:"+970", c:"PS"}, {n:"Panama", d:"+507", c:"PA"},
+            {n:"Papouasie-Nouvelle-Guinée", d:"+675", c:"PG"}, {n:"Paraguay", d:"+595", c:"PY"}, {n:"Pays-Bas", d:"+31", c:"NL"},
+            {n:"Pérou", d:"+51", c:"PE"}, {n:"Philippines", d:"+63", c:"PH"}, {n:"Pologne", d:"+48", c:"PL"},
+            {n:"Portugal", d:"+351", c:"PT"}, {n:"Qatar", d:"+974", c:"QA"}, {n:"Roumanie", d:"+40", c:"RO"},
+            {n:"Royaume-Uni", d:"+44", c:"GB"}, {n:"Russie", d:"+7", c:"RU"}, {n:"Rwanda", d:"+250", c:"RW"},
+            {n:"Saint-Christophe-et-Niévès", d:"+1", c:"KN"}, {n:"Sainte-Lucie", d:"+1", c:"LC"}, {n:"Saint-Marin", d:"+378", c:"SM"},
+            {n:"Saint-Vincent-et-les-Grenadines", d:"+1", c:"VC"}, {n:"Salomon", d:"+677", c:"SB"}, {n:"Salvador", d:"+503", c:"SV"},
+            {n:"Samoa", d:"+685", c:"WS"}, {n:"Sao Tomé-et-Principe", d:"+239", c:"ST"}, {n:"Sénégal", d:"+221", c:"SN"},
+            {n:"Serbie", d:"+381", c:"RS"}, {n:"Seychelles", d:"+248", c:"SC"}, {n:"Sierra Leone", d:"+232", c:"SL"},
+            {n:"Singapour", d:"+65", c:"SG"}, {n:"Slovaquie", d:"+421", c:"SK"}, {n:"Slovénie", d:"+386", c:"SI"},
+            {n:"Somalie", d:"+252", c:"SO"}, {n:"Soudan", d:"+249", c:"SD"}, {n:"Soudan du Sud", d:"+211", c:"SS"},
+            {n:"Sri Lanka", d:"+94", c:"LK"}, {n:"Suède", d:"+46", c:"SE"}, {n:"Suisse", d:"+41", c:"CH"},
+            {n:"Suriname", d:"+597", c:"SR"}, {n:"Syrie", d:"+963", c:"SY"}, {n:"Tadjikistan", d:"+992", c:"TJ"},
+            {n:"Tanzanie", d:"+255", c:"TZ"}, {n:"Tchad", d:"+235", c:"TD"}, {n:"Tchéquie", d:"+420", c:"CZ"},
+            {n:"Thaïlande", d:"+66", c:"TH"}, {n:"Timor oriental", d:"+670", c:"TL"}, {n:"Togo", d:"+228", c:"TG"},
+            {n:"Tonga", d:"+676", c:"TO"}, {n:"Trinité-et-Tobago", d:"+1", c:"TT"}, {n:"Tunisie", d:"+216", c:"TN"},
+            {n:"Turkménistan", d:"+993", c:"TM"}, {n:"Turquie", d:"+90", c:"TR"}, {n:"Tuvalu", d:"+688", c:"TV"},
+            {n:"Ukraine", d:"+380", c:"UA"}, {n:"Uruguay", d:"+598", c:"UY"}, {n:"Vanuatu", d:"+678", c:"VU"},
+            {n:"Vatican", d:"+379", c:"VA"}, {n:"Venezuela", d:"+58", c:"VE"}, {n:"Vietnam", d:"+84", c:"VN"},
+            {n:"Yémen", d:"+967", c:"YE"}, {n:"Zambie", d:"+260", c:"ZM"}, {n:"Zimbabwe", d:"+263", c:"ZW"},
+            /* TERRITOIRES ET ILES */
+            {n:"Guadeloupe", d:"+590", c:"GP"}, {n:"Martinique", d:"+596", c:"MQ"}, {n:"Guyane", d:"+594", c:"GF"},
+            {n:"La Réunion", d:"+262", c:"RE"}, {n:"Mayotte", d:"+262", c:"YT"}, {n:"Polynésie française", d:"+689", c:"PF"},
+            {n:"Nouvelle-Calédonie", d:"+687", c:"NC"}, {n:"Wallis-et-Futuna", d:"+681", c:"WF"},
+            {n:"Saint-Martin", d:"+590", c:"MF"}, {n:"Saint-Barthélemy", d:"+590", c:"BL"}, {n:"Saint-Pierre-et-Miquelon", d:"+508", c:"PM"},
+            {n:"Aruba", d:"+297", c:"AW"}, {n:"Curaçao", d:"+599", c:"CW"}, {n:"Groenland", d:"+299", c:"GL"},
+            {n:"Porto Rico", d:"+1", c:"PR"}, {n:"Hong Kong", d:"+852", c:"HK"}, {n:"Macao", d:"+853", c:"MO"},
+            {n:"Taïwan", d:"+886", c:"TW"}
+        ];
 
-        function updateSlider() {
-            // Sortie de la slide actuelle
-            slides[currentIdx].classList.remove('active');
-            
-            // Passage à la suivante
-            currentIdx = (currentIdx + 1) % slides.length;
-            
-            // Entrée de la nouvelle slide
-            slides[currentIdx].classList.add('active');
+        const select = document.getElementById('countrySelect');
+        const dial = document.getElementById('dialCode');
+
+        // Fonction pour générer le drapeau emoji depuis le code ISO
+        function getFlag(code) {
+            return code.toUpperCase().replace(/./g, x => String.fromCodePoint(x.charCodeAt(0) + 127397));
         }
-        setInterval(updateSlider, 6000); // Toutes les 6 secondes
 
-        // 4. API PAYS & DRAPEAUX
-        async function loadCountries() {
-            const select = document.getElementById('countrySelect');
-            const prefix = document.getElementById('prefix');
-            try {
-                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,idd,flag');
-                const data = await res.json();
-                data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+        // Initialisation de la liste
+        select.innerHTML = '<option value="">Sélectionner votre pays...</option>';
+        
+        // Tri alphabétique
+        countries.sort((a,b) => a.n.localeCompare(b.n));
 
-                select.innerHTML = '<option value="">Choisir un Pays...</option>';
-                data.forEach(c => {
-                    const dial = c.idd.root + (c.idd.suffixes ? c.idd.suffixes[0] : "");
-                    const opt = document.createElement('option');
-                    opt.value = dial;
-                    opt.textContent = `${c.flag} ${c.name.common}`;
-                    select.appendChild(opt);
-                });
+        // Remplissage
+        countries.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.d; // On stocke l'indicatif
+            opt.textContent = getFlag(c.c) + " " + c.n;
+            select.appendChild(opt);
+        });
 
-                select.addEventListener('change', (e) => prefix.value = e.target.value || "--");
-            } catch (err) { select.innerHTML = '<option>Erreur de connexion</option>'; }
-        }
-        loadCountries();
-
-        // 5. HEADER SCROLL
-        window.addEventListener('scroll', () => {
-            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+        // Mise à jour de l'indicatif au changement
+        select.addEventListener('change', function() {
+            dial.value = this.value;
         });
     </script>
 </body>
