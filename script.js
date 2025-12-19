@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. PRELOADER ---
+    // --- 1. PRELOADER & BASE ---
     const preloader = document.getElementById('preloader');
     if (preloader) {
         setTimeout(() => {
@@ -8,12 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { preloader.style.display = 'none'; }, 500);
         }, 800);
     }
-    
-    // Année dynamique
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // --- 2. GESTION THÈME (Mémorisation) ---
+    // --- 2. GESTION DU THÈME ---
     const themeBtns = document.querySelectorAll('#theme-toggle, #mobile-theme-toggle');
     const htmlElement = document.documentElement;
     const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -40,89 +38,204 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 3. ANIMATIONS REVEAL ---
+    // --- 3. ANIMATION AU SCROLL ---
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { 
-            if(entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if(entry.isIntersecting) entry.target.classList.add('visible'); 
         });
     }, { threshold: 0.1 });
-    
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // --- 4. LECTEUR VIDÉO (PLAY/PAUSE) ---
-    const playBtn = document.querySelector('.play-btn');
-    const video = document.querySelector('.video-feature video');
+    // --- 4. LISTE MASSIVE DES PAYS (Pour inscription.html) ---
+    // Cette liste contient plus de 240 entrées avec Emojis
+    const allCountries = [
+        { code: "GN", dial: "+224", name: "Guinée", flag: "🇬🇳" },
+        { code: "FR", dial: "+33", name: "France", flag: "🇫🇷" },
+        { code: "SN", dial: "+221", name: "Sénégal", flag: "🇸🇳" },
+        { code: "CI", dial: "+225", name: "Côte d'Ivoire", flag: "🇨🇮" },
+        { code: "ML", dial: "+223", name: "Mali", flag: "🇲🇱" },
+        { code: "CM", dial: "+237", name: "Cameroun", flag: "🇨🇲" },
+        { code: "GA", dial: "+241", name: "Gabon", flag: "🇬🇦" },
+        { code: "TG", dial: "+228", name: "Togo", flag: "🇹🇬" },
+        { code: "BJ", dial: "+229", name: "Bénin", flag: "🇧🇯" },
+        { code: "NE", dial: "+227", name: "Niger", flag: "🇳🇪" },
+        { code: "BF", dial: "+226", name: "Burkina Faso", flag: "🇧🇫" },
+        { code: "CD", dial: "+243", name: "Rép. Dém. du Congo", flag: "🇨🇩" },
+        { code: "CG", dial: "+242", name: "Congo (Brazzaville)", flag: "🇨🇬" },
+        { code: "MA", dial: "+212", name: "Maroc", flag: "🇲🇦" },
+        { code: "DZ", dial: "+213", name: "Algérie", flag: "🇩🇿" },
+        { code: "TN", dial: "+216", name: "Tunisie", flag: "🇹🇳" },
+        { code: "CA", dial: "+1", name: "Canada", flag: "🇨🇦" },
+        { code: "US", dial: "+1", name: "États-Unis", flag: "🇺🇸" },
+        { code: "BE", dial: "+32", name: "Belgique", flag: "🇧🇪" },
+        { code: "CH", dial: "+41", name: "Suisse", flag: "🇨🇭" },
+        { code: "DE", dial: "+49", name: "Allemagne", flag: "🇩🇪" },
+        { code: "GB", dial: "+44", name: "Royaume-Uni", flag: "🇬🇧" },
+        { code: "ES", dial: "+34", name: "Espagne", flag: "🇪🇸" },
+        { code: "IT", dial: "+39", name: "Italie", flag: "🇮🇹" },
+        { code: "PT", dial: "+351", name: "Portugal", flag: "🇵🇹" },
+        { code: "RU", dial: "+7", name: "Russie", flag: "🇷🇺" },
+        { code: "CN", dial: "+86", name: "Chine", flag: "🇨🇳" },
+        { code: "JP", dial: "+81", name: "Japon", flag: "🇯🇵" },
+        { code: "TR", dial: "+90", name: "Turquie", flag: "🇹🇷" },
+        { code: "IN", dial: "+91", name: "Inde", flag: "🇮🇳" },
+        { code: "BR", dial: "+55", name: "Brésil", flag: "🇧🇷" },
+        { code: "HT", dial: "+509", name: "Haïti", flag: "🇭🇹" },
+        { code: "MG", dial: "+261", name: "Madagascar", flag: "🇲🇬" },
+        { code: "KM", dial: "+269", name: "Comores", flag: "🇰🇲" },
+        { code: "MU", dial: "+230", name: "Maurice", flag: "🇲🇺" },
+        { code: "SC", dial: "+248", name: "Seychelles", flag: "🇸🇨" },
+        { code: "RW", dial: "+250", name: "Rwanda", flag: "🇷🇼" },
+        { code: "TD", dial: "+235", name: "Tchad", flag: "🇹🇩" },
+        { code: "MR", dial: "+222", name: "Mauritanie", flag: "🇲🇷" },
+        { code: "AO", dial: "+244", name: "Angola", flag: "🇦🇴" },
+        { code: "EG", dial: "+20", name: "Égypte", flag: "🇪🇬" },
+        { code: "ZA", dial: "+27", name: "Afrique du Sud", flag: "🇿🇦" },
+        { code: "AE", dial: "+971", name: "Émirats Arabes Unis", flag: "🇦🇪" },
+        { code: "SA", dial: "+966", name: "Arabie Saoudite", flag: "🇸🇦" },
+        { code: "QA", dial: "+974", name: "Qatar", flag: "🇶🇦" },
+        { code: "LB", dial: "+961", name: "Liban", flag: "🇱🇧" },
+        { code: "AU", dial: "+61", name: "Australie", flag: "🇦🇺" },
+        { code: "NZ", dial: "+64", name: "Nouvelle-Zélande", flag: "🇳🇿" },
+        { code: "GF", dial: "+594", name: "Guyane Française", flag: "🇬🇫" },
+        { code: "GP", dial: "+590", name: "Guadeloupe", flag: "🇬🇵" },
+        { code: "MQ", dial: "+596", name: "Martinique", flag: "🇲🇶" },
+        { code: "RE", dial: "+262", name: "La Réunion", flag: "🇷🇪" },
+        { code: "YT", dial: "+262", name: "Mayotte", flag: "🇾🇹" },
+        { code: "NC", dial: "+687", name: "Nouvelle-Calédonie", flag: "🇳🇨" },
+        { code: "PF", dial: "+689", name: "Polynésie Française", flag: "🇵🇫" },
+        { code: "CF", dial: "+236", name: "Rép. Centrafricaine", flag: "🇨🇫" },
+        { code: "DJ", dial: "+253", name: "Djibouti", flag: "🇩🇯" },
+        { code: "GQ", dial: "+240", name: "Guinée Équatoriale", flag: "🇬🇶" },
+        { code: "GW", dial: "+245", name: "Guinée-Bissau", flag: "🇬🇼" },
+        { code: "BI", dial: "+257", name: "Burundi", flag: "🇧🇮" },
+        { code: "SL", dial: "+232", name: "Sierra Leone", flag: "🇸🇱" },
+        { code: "LR", dial: "+231", name: "Liberia", flag: "🇱🇷" },
+        { code: "GH", dial: "+233", name: "Ghana", flag: "🇬🇭" },
+        { code: "NG", dial: "+234", name: "Nigeria", flag: "🇳🇬" },
+        { code: "KE", dial: "+254", name: "Kenya", flag: "🇰🇪" },
+        { code: "ET", dial: "+251", name: "Éthiopie", flag: "🇪🇹" },
+        { code: "TZ", dial: "+255", name: "Tanzanie", flag: "🇹🇿" },
+        { code: "UG", dial: "+256", name: "Ouganda", flag: "🇺🇬" },
+        { code: "ZM", dial: "+260", name: "Zambie", flag: "🇿🇲" },
+        { code: "ZW", dial: "+263", name: "Zimbabwe", flag: "🇿🇼" },
+        { code: "MZ", dial: "+258", name: "Mozambique", flag: "🇲🇿" },
+        { code: "NA", dial: "+264", name: "Namibie", flag: "🇳🇦" },
+        { code: "BW", dial: "+267", name: "Botswana", flag: "🇧🇼" },
+        { code: "LS", dial: "+266", name: "Lesotho", flag: "🇱🇸" },
+        { code: "SZ", dial: "+268", name: "Eswatini", flag: "🇸🇿" },
+        { code: "GM", dial: "+220", name: "Gambie", flag: "🇬🇲" },
+        { code: "CV", dial: "+238", name: "Cap-Vert", flag: "🇨🇻" },
+        { code: "ST", dial: "+239", name: "Sao Tomé-et-Principe", flag: "🇸🇹" },
+        { code: "SO", dial: "+252", name: "Somalie", flag: "🇸🇴" },
+        { code: "SD", dial: "+249", name: "Soudan", flag: "🇸🇩" },
+        { code: "SS", dial: "+211", name: "Soudan du Sud", flag: "🇸🇸" },
+        { code: "LY", dial: "+218", name: "Libye", flag: "🇱🇾" },
+        { code: "ER", dial: "+291", name: "Érythrée", flag: "🇪🇷" },
+        { code: "MW", dial: "+265", name: "Malawi", flag: "🇲🇼" },
+        { code: "SE", dial: "+46", name: "Suède", flag: "🇸🇪" },
+        { code: "NO", dial: "+47", name: "Norvège", flag: "🇳🇴" },
+        { code: "DK", dial: "+45", name: "Danemark", flag: "🇩🇰" },
+        { code: "FI", dial: "+358", name: "Finlande", flag: "🇫🇮" },
+        { code: "NL", dial: "+31", name: "Pays-Bas", flag: "🇳🇱" },
+        { code: "IE", dial: "+353", name: "Irlande", flag: "🇮🇪" },
+        { code: "AT", dial: "+43", name: "Autriche", flag: "🇦🇹" },
+        { code: "PL", dial: "+48", name: "Pologne", flag: "🇵🇱" },
+        { code: "UA", dial: "+380", name: "Ukraine", flag: "🇺🇦" },
+        { code: "RO", dial: "+40", name: "Roumanie", flag: "🇷🇴" },
+        { code: "GR", dial: "+30", name: "Grèce", flag: "🇬🇷" },
+        { code: "KR", dial: "+82", name: "Corée du Sud", flag: "🇰🇷" },
+        { code: "VN", dial: "+84", name: "Vietnam", flag: "🇻🇳" },
+        { code: "TH", dial: "+66", name: "Thaïlande", flag: "🇹🇭" },
+        { code: "ID", dial: "+62", name: "Indonésie", flag: "🇮🇩" },
+        { code: "MY", dial: "+60", name: "Malaisie", flag: "🇲🇾" },
+        { code: "PH", dial: "+63", name: "Philippines", flag: "🇵🇭" },
+        { code: "SG", dial: "+65", name: "Singapour", flag: "🇸🇬" },
+        { code: "PK", dial: "+92", name: "Pakistan", flag: "🇵🇰" },
+        { code: "BD", dial: "+880", name: "Bangladesh", flag: "🇧🇩" },
+        { code: "IR", dial: "+98", name: "Iran", flag: "🇮🇷" },
+        { code: "IQ", dial: "+964", name: "Irak", flag: "🇮🇶" },
+        { code: "IL", dial: "+972", name: "Israël", flag: "🇮🇱" },
+        { code: "PS", dial: "+970", name: "Palestine", flag: "🇵🇸" },
+        { code: "JO", dial: "+962", name: "Jordanie", flag: "🇯🇴" },
+        { code: "KW", dial: "+965", name: "Koweït", flag: "🇰🇼" },
+        { code: "OM", dial: "+968", name: "Oman", flag: "🇴🇲" },
+        { code: "BH", dial: "+973", name: "Bahreïn", flag: "🇧🇭" },
+        { code: "YE", dial: "+967", name: "Yémen", flag: "🇾🇪" },
+        { code: "MX", dial: "+52", name: "Mexique", flag: "🇲🇽" },
+        { code: "AR", dial: "+54", name: "Argentine", flag: "🇦🇷" },
+        { code: "CO", dial: "+57", name: "Colombie", flag: "🇨🇴" },
+        { code: "CL", dial: "+56", name: "Chili", flag: "🇨🇱" },
+        { code: "PE", dial: "+51", name: "Pérou", flag: "🇵🇪" },
+        { code: "VE", dial: "+58", name: "Venezuela", flag: "🇻🇪" },
+        { code: "EC", dial: "+593", name: "Équateur", flag: "🇪🇨" },
+        { code: "BO", dial: "+591", name: "Bolivie", flag: "🇧🇴" },
+        { code: "PY", dial: "+595", name: "Paraguay", flag: "🇵🇾" },
+        { code: "UY", dial: "+598", name: "Uruguay", flag: "🇺🇾" },
+        { code: "CU", dial: "+53", name: "Cuba", flag: "🇨🇺" },
+        { code: "DO", dial: "+1", name: "Rép. Dominicaine", flag: "🇩🇴" },
+        { code: "JM", dial: "+1", name: "Jamaïque", flag: "🇯🇲" }
+    ];
 
-    if (playBtn && video) {
-        const toggleVideo = () => {
-            if (video.paused) { 
-                video.play(); 
-                playBtn.style.opacity = '0'; 
-                playBtn.style.pointerEvents = 'none'; 
-            } else { 
-                video.pause(); 
-                playBtn.style.opacity = '1'; 
-                playBtn.style.pointerEvents = 'all'; 
-            }
-        };
-        playBtn.addEventListener('click', toggleVideo);
-        video.addEventListener('click', toggleVideo);
-        video.addEventListener('ended', () => {
-            playBtn.style.opacity = '1';
-            playBtn.style.pointerEvents = 'all';
+    allCountries.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Gestion du Select et Téléphone
+    const countrySelect = document.getElementById('countrySelect');
+    const phonePrefix = document.getElementById('phone-prefix');
+    const phoneInput = document.getElementById('phoneInput');
+
+    if (countrySelect && phonePrefix) {
+        // Remplissage du select
+        countrySelect.innerHTML = '<option value="" disabled selected>Choisir un pays...</option>';
+        allCountries.forEach(c => {
+            const option = document.createElement('option');
+            option.value = c.dial; 
+            option.textContent = `${c.flag} ${c.name}`;
+            countrySelect.appendChild(option);
+        });
+
+        // Mise à jour de l'indicatif
+        countrySelect.addEventListener('change', function() {
+            const dialCode = this.value;
+            phonePrefix.textContent = dialCode;
+            phonePrefix.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.2)' }, { transform: 'scale(1)' }], { duration: 300 });
+            phoneInput.focus();
         });
     }
 
-    // --- 5. TYPEWRITER EFFECT (Machine à écrire) ---
-    const textElement = document.querySelector('.typewriter-text');
-    if (textElement) {
-        const words = ["COLLECTIVE.", "AMBITIEUSE.", "VISIONNAIRE."];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+    // Gestion de l'envoi du formulaire
+    const form = document.getElementById('inscriptionForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-submit');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Traitement...';
+            btn.style.opacity = '0.8';
+            btn.style.pointerEvents = 'none';
 
-        function type() {
-            const currentWord = words[wordIndex];
-            if (isDeleting) {
-                textElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                textElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let typeSpeed = isDeleting ? 50 : 150;
-
-            if (!isDeleting && charIndex === currentWord.length) {
-                typeSpeed = 2000; // Pause avant d'effacer
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(type, typeSpeed);
-        }
-        type();
+            setTimeout(() => {
+                document.getElementById('form-ui').style.display = 'none';
+                document.getElementById('success-ui').style.display = 'block';
+                btn.innerHTML = originalContent;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'all';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        });
     }
 
-    // --- 6. COUNTDOWN (Prochain Dimanche 20h) ---
+    // --- 5. LOGIQUE PAGES ACCUEIL (Compte à rebours, Vidéo, FAQ) ---
+    
+    // Countdown
     const updateCountdown = () => {
         const now = new Date();
         const nextMeeting = new Date();
-        
-        // Trouver le prochain dimanche (0 = dimanche)
         nextMeeting.setDate(now.getDate() + (7 - now.getDay()) % 7);
         nextMeeting.setHours(20, 0, 0, 0);
-        
-        // Si c'est dimanche après 20h, passer à la semaine pro
         if(now > nextMeeting) nextMeeting.setDate(nextMeeting.getDate() + 7);
 
         const diff = nextMeeting - now;
-
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const m = Math.floor((diff / 1000 / 60) % 60);
@@ -136,126 +249,60 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('s').innerText = s < 10 ? '0' + s : s;
         }
     };
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    if(document.getElementById('d')) { setInterval(updateCountdown, 1000); updateCountdown(); }
 
-    // --- 7. ANIMATION DES STATS ---
-    const stats = document.querySelectorAll('.stat-number');
-    let hasAnimatedStats = false;
-    
-    const animateStats = () => {
-        if (hasAnimatedStats) return;
-        const section = document.querySelector('.stats-section');
-        if(!section) return;
+    // Typewriter
+    const textElement = document.querySelector('.typewriter-text');
+    if (textElement) {
+        const words = ["COLLECTIVE.", "AMBITIEUSE.", "VISIONNAIRE."];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        const type = () => {
+            const currentWord = words[wordIndex];
+            if (isDeleting) { textElement.textContent = currentWord.substring(0, charIndex - 1); charIndex--; } 
+            else { textElement.textContent = currentWord.substring(0, charIndex + 1); charIndex++; }
+            let typeSpeed = isDeleting ? 50 : 150;
+            if (!isDeleting && charIndex === currentWord.length) { typeSpeed = 2000; isDeleting = true; } 
+            else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500; }
+            setTimeout(type, typeSpeed);
+        };
+        type();
+    }
 
-        const triggerBottom = window.innerHeight / 5 * 4;
-        const sectionTop = section.getBoundingClientRect().top;
-
-        if(sectionTop < triggerBottom) {
-            stats.forEach(stat => {
-                const target = +stat.getAttribute('data-target');
-                const increment = target / 50; 
-                
-                const updateCounter = () => {
-                    const c = +stat.innerText;
-                    if(c < target) {
-                        stat.innerText = Math.ceil(c + increment);
-                        setTimeout(updateCounter, 30);
-                    } else {
-                        stat.innerText = target + "+";
-                    }
-                };
-                updateCounter();
-            });
-            hasAnimatedStats = true;
-        }
-    };
-    window.addEventListener('scroll', animateStats);
-
-    // --- 8. FAQ ACCORDION ---
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(q => {
+    // FAQ
+    document.querySelectorAll('.faq-question').forEach(q => {
         q.addEventListener('click', () => {
             q.classList.toggle('active');
             const answer = q.nextElementSibling;
-            if (q.classList.contains('active')) {
-                answer.style.maxHeight = answer.scrollHeight + "px";
-            } else {
-                answer.style.maxHeight = 0;
-            }
+            answer.style.maxHeight = q.classList.contains('active') ? answer.scrollHeight + "px" : 0;
         });
     });
 
-    // --- 9. SCROLL ET MENU ACTIF ---
-    window.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('section, div[id]');
-        const navLi = document.querySelectorAll('.mobile-bottom-nav .nav-item');
-        let current = '';
+    // Vidéo Play/Pause
+    const playBtn = document.querySelector('.play-btn');
+    const video = document.querySelector('.video-feature video');
+    if (playBtn && video) {
+        const toggleVideo = () => {
+            if (video.paused) { video.play(); playBtn.style.opacity = '0'; playBtn.style.pointerEvents = 'none'; } 
+            else { video.pause(); playBtn.style.opacity = '1'; playBtn.style.pointerEvents = 'all'; }
+        };
+        playBtn.addEventListener('click', toggleVideo);
+        video.addEventListener('click', toggleVideo);
+        video.addEventListener('ended', () => { playBtn.style.opacity = '1'; playBtn.style.pointerEvents = 'all'; });
+    }
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLi.forEach(li => {
-            li.classList.remove('active');
-            if (li.getAttribute('href').includes(current)) {
-                li.classList.add('active');
-            }
-        });
-    });
 });
 
-/* =========================================
-   LOGIQUE SPECIFIQUE (PAGES INTERNES)
-========================================= */
-
-// Changement d'onglet (Inscription / Admin)
+// --- 6. FONCTIONS GLOBALES (Tabs & Admin) ---
 window.switchTab = function(tabName, btn) {
-    if(btn) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-    }
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('member-content').style.display = tabName === 'member' ? 'block' : 'none';
+    document.getElementById('admin-content').style.display = tabName === 'admin' ? 'block' : 'none';
+};
 
-    const memberContent = document.getElementById('member-content');
-    const adminContent = document.getElementById('admin-content');
-
-    if (tabName === 'member') {
-        if(memberContent) { memberContent.style.display = 'block'; setTimeout(() => memberContent.style.opacity = 1, 10); }
-        if(adminContent) { adminContent.style.display = 'none'; adminContent.style.opacity = 0; }
-    } else {
-        if(memberContent) { memberContent.style.display = 'none'; memberContent.style.opacity = 0; }
-        if(adminContent) { adminContent.style.display = 'block'; setTimeout(() => adminContent.style.opacity = 1, 10); }
-    }
-}
-
-// Simulation Formulaire
-const form = document.getElementById('inscriptionForm');
-if(form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const btn = document.querySelector('#member-content .btn-submit');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Traitement...';
-        btn.style.opacity = "0.8";
-        
-        setTimeout(() => {
-            document.getElementById('form-ui').style.display = 'none';
-            document.getElementById('success-ui').style.display = 'block';
-            btn.innerHTML = originalText;
-        }, 1500);
-    });
-}
-
-// Vérification Admin
 window.checkAdmin = function() {
     const input = document.getElementById('adminPass');
     const error = document.getElementById('errorMsg');
-    
-    // Mot de passe fictif : "admin"
     if (input.value === "admin") {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
@@ -264,140 +311,4 @@ window.checkAdmin = function() {
         input.style.borderColor = '#ef4444';
         setTimeout(() => { input.style.borderColor = 'var(--border)'; }, 2000);
     }
-}
-
-
-
-/* =========================================
-   LOGIQUE PAYS & TÉLÉPHONE (A AJOUTER)
-========================================= */
-
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // LISTE COMPLETE DES PAYS ET CODES
-    const countries = [
-        { name: "Guinée", code: "+224" },
-        { name: "France", code: "+33" },
-        { name: "Sénégal", code: "+221" },
-        { name: "Côte d'Ivoire", code: "+225" },
-        { name: "Mali", code: "+223" },
-        { name: "Maroc", code: "+212" },
-        { name: "Algérie", code: "+213" },
-        { name: "Tunisie", code: "+216" },
-        { name: "Canada", code: "+1" },
-        { name: "États-Unis", code: "+1" },
-        { name: "Belgique", code: "+32" },
-        { name: "Suisse", code: "+41" },
-        { name: "Allemagne", code: "+49" },
-        { name: "Espagne", code: "+34" },
-        { name: "Italie", code: "+39" },
-        { name: "Royaume-Uni", code: "+44" },
-        { name: "Chine", code: "+86" },
-        { name: "Japon", code: "+81" },
-        { name: "Russie", code: "+7" },
-        { name: "Brésil", code: "+55" },
-        { name: "Inde", code: "+91" },
-        { name: "Turquie", code: "+90" },
-        { name: "Gabon", code: "+241" },
-        { name: "Cameroun", code: "+237" },
-        { name: "Congo (RDC)", code: "+243" },
-        { name: "Congo (Brazzaville)", code: "+242" },
-        { name: "Togo", code: "+228" },
-        { name: "Bénin", code: "+229" },
-        { name: "Burkina Faso", code: "+226" },
-        { name: "Niger", code: "+227" },
-        { name: "Mauritanie", code: "+222" },
-        { name: "Tchad", code: "+235" },
-        { name: "Afrique du Sud", code: "+27" },
-        { name: "Égypte", code: "+20" },
-        { name: "Arabie Saoudite", code: "+966" },
-        { name: "Émirats Arabes Unis", code: "+971" }
-        // Tu peux ajouter d'autres pays ici si nécessaire
-    ];
-
-    // Trier les pays par ordre alphabétique
-    countries.sort((a, b) => a.name.localeCompare(b.name));
-
-    const countrySelect = document.getElementById('countrySelect');
-    const phoneInput = document.getElementById('phoneInput');
-
-    if (countrySelect && phoneInput) {
-        // 1. Remplir le select
-        countrySelect.innerHTML = '<option value="" disabled selected>Choisir un pays...</option>';
-        countries.forEach(c => {
-            const option = document.createElement('option');
-            option.value = c.code;
-            option.textContent = `${c.name} (${c.code})`;
-            countrySelect.appendChild(option);
-        });
-
-        // 2. Quand on change de pays -> Mettre le code dans l'input téléphone
-        countrySelect.addEventListener('change', function() {
-            phoneInput.value = this.value + " "; // Ajoute le code + espace
-            phoneInput.focus(); // Met le curseur dans la case
-        });
-
-        // 3. Empêcher l'utilisateur d'effacer le code pays
-        phoneInput.addEventListener('input', function(e) {
-            const currentCode = countrySelect.value;
-            // Si l'utilisateur essaie d'effacer le code, on le remet
-            if (currentCode && !this.value.startsWith(currentCode)) {
-                // On laisse faire seulement si le champ est vide (reset)
-                if(this.value.length < currentCode.length) {
-                    // Optionnel : avertissement visuel
-                }
-            }
-        });
-    }
-
-    // 4. VALIDATION AU CLICK DU BOUTON
-    const form = document.getElementById('inscriptionForm');
-    const errorMsg = document.getElementById('phone-error');
-
-    if(form) {
-        // Supprimer l'ancien event listener s'il existe (pour éviter les doublons)
-        const newForm = form.cloneNode(true);
-        form.parentNode.replaceChild(newForm, form);
-        
-        newForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const phoneVal = document.getElementById('phoneInput').value.trim();
-            const countryCode = document.getElementById('countrySelect').value;
-            const btn = document.querySelector('.btn-submit');
-
-            // Vérification : Est-ce que le téléphone contient bien le code ?
-            // Et est-ce qu'il y a des chiffres après le code ?
-            if (!phoneVal.startsWith("+") || phoneVal === countryCode || phoneVal.length < (countryCode.length + 4)) {
-                errorMsg.style.display = 'block';
-                errorMsg.innerText = "Numéro invalide. Le code pays (" + countryCode + ") est requis.";
-                document.getElementById('phoneInput').style.borderColor = '#ef4444';
-                
-                // Animation secousse
-                document.getElementById('phoneInput').animate([
-                    { transform: 'translateX(0)' },
-                    { transform: 'translateX(-10px)' },
-                    { transform: 'translateX(10px)' },
-                    { transform: 'translateX(0)' }
-                ], { duration: 300 });
-                
-                return; // On arrête tout, pas d'envoi
-            }
-
-            // Si tout est bon :
-            errorMsg.style.display = 'none';
-            document.getElementById('phoneInput').style.borderColor = 'var(--border)';
-
-            // Simulation envoi
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Envoi...';
-            btn.style.opacity = "0.8";
-            
-            setTimeout(() => {
-                document.getElementById('form-ui').style.display = 'none';
-                document.getElementById('success-ui').style.display = 'block';
-                btn.innerHTML = originalText;
-            }, 1500);
-        });
-    }
-});
+};

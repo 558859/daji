@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Inscription | V.E.D DAJI</title>
+    <title>Adhésion Elite | V.E.D DAJI</title>
     <link rel="icon" type="image/png" href="images/V.E.D.png">
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,8 +16,7 @@
 
     <header>
         <a href="index.html" class="logo">
-            <img src="images/V.E.D.png" alt="Logo" onerror="this.style.display='none'">
-            V.E.D <span>DAJI</span>
+            <div style="font-weight:900; font-size:1.4rem;">V.E.D <span>DAJI</span></div>
         </a>
         <div style="display:flex; gap:15px;">
             <button id="theme-toggle" class="icon-btn"><i class="fa-solid fa-moon"></i></button>
@@ -25,90 +25,150 @@
 
     <div class="container-form reveal">
         
-        <a href="index.html" class="btn-retour"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+        <a href="index.html" class="btn-retour"><i class="fa-solid fa-arrow-left"></i> Retour à l'accueil</a>
 
         <div class="tabs-wrapper">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('member', this)">Inscription</button>
-                <button class="tab-btn" onclick="switchTab('admin', this)">Administration</button>
+                <button class="tab-btn active" onclick="switchTab('member', this)">Nouvelle Adhésion</button>
+                <button class="tab-btn" onclick="switchTab('admin', this)">Bureau</button>
             </div>
         </div>
 
+        <!-- FORMULAIRE MEMBRE -->
         <div id="member-content" class="content-box active">
             <div id="form-ui">
-                <h2 style="text-align:center; margin-bottom:20px;">Adhésion Membre</h2>
+                <div class="form-header">
+                    <h2>Formulaire d'Excellence</h2>
+                    <p>Rejoignez l'élite estudiantine mondiale.</p>
+                </div>
+                
                 <form id="inscriptionForm">
                     <div class="form-grid">
-                        <!-- NOM -->
+                        
+                        <!-- GENRE -->
                         <div class="input-group">
-                            <label>Nom</label>
-                            <input type="text" class="custom-input" required>
-                            <i class="fa-solid fa-user input-icon"></i>
-                        </div>
-
-                        <!-- PRÉNOM -->
-                        <div class="input-group">
-                            <label>Prénom</label>
-                            <input type="text" class="custom-input" required>
-                            <i class="fa-regular fa-user input-icon"></i>
-                        </div>
-
-                        <!-- SEXE (NOUVEAU) -->
-                        <div class="input-group full-width" style="grid-column: 1 / -1;">
-                            <label>Sexe</label>
+                            <label>Civilité</label>
                             <select class="custom-input" required>
                                 <option value="" disabled selected>Choisir...</option>
-                                <option value="H">Homme</option>
-                                <option value="F">Femme</option>
+                                <option value="M">Monsieur</option>
+                                <option value="Mme">Madame</option>
+                                <option value="Mlle">Mademoiselle</option>
                             </select>
                             <i class="fa-solid fa-venus-mars input-icon"></i>
                         </div>
 
-                        <!-- PAYS (Tous les pays gérés par JS) -->
+                        <!-- AGE -->
+                        <div class="input-group">
+                            <label>Âge</label>
+                            <input type="number" min="16" max="99" class="custom-input" placeholder="Ex: 22" required>
+                            <i class="fa-solid fa-cake-candles input-icon"></i>
+                        </div>
+
+                        <!-- NOM -->
+                        <div class="input-group">
+                            <label>Nom de famille</label>
+                            <input type="text" class="custom-input" placeholder="Votre nom" required>
+                            <i class="fa-regular fa-user input-icon"></i>
+                        </div>
+
+                        <!-- PRÉNOM -->
+                        <div class="input-group">
+                            <label>Prénom(s)</label>
+                            <input type="text" class="custom-input" placeholder="Votre prénom" required>
+                            <i class="fa-solid fa-user input-icon"></i>
+                        </div>
+
+                        <!-- EMAIL -->
                         <div class="input-group full-width" style="grid-column: 1 / -1;">
-                            <label>Pays de résidence</label>
+                            <label>Adresse Email</label>
+                            <input type="email" class="custom-input" placeholder="exemple@gmail.com" required>
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                        </div>
+
+                        <!-- PAYS (LISTE MONDIALE GÉRÉE PAR JS) -->
+                        <div class="input-group full-width" style="grid-column: 1 / -1;">
+                            <label>Pays de Résidence</label>
                             <select id="countrySelect" class="custom-input" required>
                                 <option value="" disabled selected>Chargement des pays...</option>
+                                <!-- Rempli par le script.js -->
                             </select>
                             <i class="fa-solid fa-globe input-icon"></i>
                         </div>
 
-                        <!-- TÉLÉPHONE (Code auto) -->
+                        <!-- TÉLÉPHONE INTELLIGENT -->
                         <div class="input-group full-width" style="grid-column: 1 / -1;">
                             <label>Téléphone (WhatsApp)</label>
-                            <input type="tel" id="phoneInput" class="custom-input" placeholder="Choisissez un pays d'abord" required>
-                            <i class="fa-solid fa-phone input-icon"></i>
-                            <small id="phone-error" style="color:#ef4444; font-size:0.75rem; display:none; margin-top:5px;">Le code pays est obligatoire (+XXX).</small>
+                            <div class="phone-wrapper">
+                                <span id="phone-prefix" class="phone-prefix">---</span>
+                                <input type="tel" id="phoneInput" class="custom-input-phone" placeholder="Numéro sans l'indicatif" required>
+                            </div>
+                            <small class="hint-text">L'indicatif est ajouté automatiquement selon le pays.</small>
                         </div>
+
+                        <!-- NIVEAU D'ÉTUDES -->
+                        <div class="input-group full-width" style="grid-column: 1 / -1;">
+                            <label>Niveau Académique</label>
+                            <select class="custom-input" required>
+                                <option value="" disabled selected>Sélectionnez votre niveau...</option>
+                                <optgroup label="Cycle Licence">
+                                    <option value="L1">Licence 1</option>
+                                    <option value="L2">Licence 2</option>
+                                    <option value="L3">Licence 3 / Bachelor</option>
+                                </optgroup>
+                                <optgroup label="Cycle Master">
+                                    <option value="M1">Master 1</option>
+                                    <option value="M2">Master 2 / Ingénieur</option>
+                                </optgroup>
+                                <optgroup label="Cycle Doctorat">
+                                    <option value="DOC">Doctorat (PhD)</option>
+                                </optgroup>
+                                <optgroup label="Autres">
+                                    <option value="BAC">Baccalauréat</option>
+                                    <option value="BTS">BTS / DUT</option>
+                                    <option value="PRO">Professionnel</option>
+                                </optgroup>
+                            </select>
+                            <i class="fa-solid fa-graduation-cap input-icon"></i>
+                        </div>
+
                     </div>
-                    <button type="submit" class="btn-submit">Valider l'inscription</button>
+
+                    <button type="submit" class="btn-submit">
+                        <span>Confirmer l'inscription</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
                 </form>
             </div>
             
-            <div id="success-ui" style="display:none; text-align:center;">
-                <div style="font-size:3rem; color:var(--primary); margin-bottom:10px;"><i class="fa-solid fa-check-circle"></i></div>
-                <h3 style="color:var(--text-main);">Félicitations !</h3>
-                <p style="margin:10px 0; color:var(--text-muted);">Votre demande a été envoyée au bureau.</p>
-                <button onclick="location.reload()" class="btn-submit">Retour</button>
+            <!-- MESSAGE SUCCÈS -->
+            <div id="success-ui" style="display:none; text-align:center; padding: 40px 0;">
+                <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+                <h3 style="color:var(--text-main); font-size:1.5rem; margin-bottom:10px;">Dossier Transmis</h3>
+                <p style="color:var(--text-muted); margin-bottom:30px;">Bienvenue dans la procédure d'admission V.E.D DAJI. Le bureau vous contactera sous 24h.</p>
+                <button onclick="location.reload()" class="btn-submit" style="background:var(--bg-glass); border:1px solid var(--border);">Nouvelle inscription</button>
             </div>
         </div>
 
+        <!-- ADMINISTRATION (Login) -->
         <div id="admin-content" class="content-box" style="display:none;">
-            <div id="login-screen" style="text-align:center;">
-                <h2>Espace Bureau</h2>
+            <div id="login-screen" style="text-align:center; padding:20px;">
+                <div style="font-size:3rem; color:var(--text-muted); margin-bottom:20px;"><i class="fa-solid fa-user-shield"></i></div>
+                <h2>Accès Bureau</h2>
                 <div style="position:relative; max-width:300px; margin:20px auto;">
-                    <input type="password" id="adminPass" class="custom-input" placeholder="Code d'accès"><i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="adminPass" class="custom-input" placeholder="Code de sécurité">
+                    <i class="fa-solid fa-lock input-icon"></i>
                 </div>
                 <button onclick="checkAdmin()" class="btn-submit">Connexion</button>
-                <p id="errorMsg" style="color:#ef4444; display:none; margin-top:10px;">Code incorrect</p>
+                <p id="errorMsg" style="color:#ef4444; display:none; margin-top:15px; font-size:0.9rem;">Accès refusé. Code incorrect.</p>
             </div>
             <div id="dashboard" style="display:none; text-align:center;">
-                <h3 style="color:var(--primary);">Accès autorisé</h3>
-                <p>Bienvenue dans la base de données.</p>
+                <h3 style="color:var(--primary);">Dashboard</h3>
+                <p>Bienvenue Admin. Base de données connectée.</p>
             </div>
         </div>
     </div>
 
+    <!-- Navigation Mobile -->
     <nav class="mobile-bottom-nav">
         <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i></a>
         <a href="inscription.html" class="nav-item active"><i class="fa-solid fa-plus-circle"></i></a>
